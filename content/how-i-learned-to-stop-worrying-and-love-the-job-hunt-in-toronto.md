@@ -7,10 +7,10 @@ draft = false
 slug = "how-i-learned-to-stop-worrying-and-love-the-job-hunt-in-toronto"
 tags = ["toronto", "job"]
 title = "How I Learned to Stop Worrying and Love the Job Hunt"
-
+disqus_identifier = 22
 +++
 
-This is a story about finding a job as a senior software engineer in Toronto - with a twist: just having moved there from Germany. 
+This is a story about finding a job as a senior software engineer in Toronto - with a twist: just having moved there from Germany.
 
 I was prepared. I had a plan. But it failed completely - at first. I had to adapt and learn. It was a roller coaster ride.
 
@@ -56,9 +56,9 @@ As part of my research I learned that most jobs are not found online, they can o
 
 Well...
 
-Within a few days, I had applied to five companies online. I took a bit of time to craft a cover letter for each of them. They weren't perfect, but quite good. Then I was waiting for all the inquiries to fill up my inbox. 
+Within a few days, I had applied to five companies online. I took a bit of time to craft a cover letter for each of them. They weren't perfect, but quite good. Then I was waiting for all the inquiries to fill up my inbox.
 
-Nothing. Happened. 
+Nothing. Happened.
 
 Even one company where I seemed to be an almost 100% fit didn't get back to me.
 
@@ -129,7 +129,7 @@ Coding challenges are a very distinct IT phenomenon. In what other profession do
 
 Here are the coding challenges I had to do:
 
-### HackerRank 
+### HackerRank
 
 HackerRank is a platform dedicated to coding challenges. You can practice them in a multitude of programming languages. Their business model is to sell this platform to companies as a way to test applicants.
 
@@ -140,7 +140,7 @@ My challenge involved nine exercises, for example:
   - Model the design of a vending machine
   - [Find the largest possible difference in an array ](http://stackoverflow.com/questions/11858790)
   - Merge two sorted arrays
-  - Multiple choice: Which of these Java statements initializes an array?  
+  - Multiple choice: Which of these Java statements initializes an array?
 
 The trick is that you only have 90 minutes. But at least you are allowed to use an IDE and your language's documentation. Furthermore, there are tests you can run your solution against and get prompt feedback.
 
@@ -158,11 +158,11 @@ The challenges were:
   - Refactor some code to make it more functional
   - Explain what `["123", "456", "789a", ...].map(parseInt)` returns
   - What ECMAScript proposal are you most excited about?
-  - Given a set of requirements, what tech stack would you choose? 
+  - Given a set of requirements, what tech stack would you choose?
 
 I enjoyed this challenge much more than the previous one. The questions didn't test whether I could find an algorithm to completely artificial problems but rather explored various aspects of programming: understanding and fixing existing code, refactoring, and higher-level thinking and opinions.
 
-The exception being the one that tested my knowledge of JavaScript quirks. `parseInt` has some very weird behavior. But fortunately, you can just go and read the documentation since there is no countdown.   
+The exception being the one that tested my knowledge of JavaScript quirks. `parseInt` has some very weird behavior. But fortunately, you can just go and read the documentation since there is no countdown.
 
 ### Mini-project
 
@@ -170,7 +170,7 @@ Another company asked me to create a web application based on a short specificat
 
 While they said I shouldn't spend more than a "couple of hours" on it, it took me pretty much one and a half days to finish. This was mostly due to the fact that I picked a tech stack I'm not as well-versed in as I am in Java (but building frontends in Java is a pain). Another reason was that I hadn't used PostgreSQL in a while (was required to be used).
 
-Anyway, when I finished and packaged it up, I was very close to submitting it. But then I realized I hadn't tried to run the bundle I created. I tried it and the app didn't start. I forgot to add one of the directories. I fixed it, tried again and it worked. Good thing I hadn't sent the broken one! 
+Anyway, when I finished and packaged it up, I was very close to submitting it. But then I realized I hadn't tried to run the bundle I created. I tried it and the app didn't start. I forgot to add one of the directories. I fixed it, tried again and it worked. Good thing I hadn't sent the broken one!
 
 All in all, I thought this was a fun and worthwhile challenge, albeit a bit too time-consuming.
 
@@ -180,7 +180,7 @@ From another company, I received a comparatively tiny but still very difficult c
 
 Coming up with the algorithm took me about an hour - but implementing it as concise, functional and efficient as I could took me roughly three hours. I used tests to cover all the edge cases and to make sure that I was submitting a working solution.
 
-This was a very cool challenge. I got to solve a tricky problem and play around with a new programming language. 
+This was a very cool challenge. I got to solve a tricky problem and play around with a new programming language.
 
 ### Interactive Coding
 
@@ -188,7 +188,7 @@ Last but not least, I was asked to prepare a tiny ToDo application (which took m
 
 In the end, I was asked about the space and time complexity of the last, most challenging algorithm. All in all, quite straightforward. I found it very important to have a dialogue with the interviewer. Especially, asking him to clarify constraints and requirements made a huge difference. Just starting to code is usually a bad move.
 
-### Ignoring the Challenge 
+### Ignoring the Challenge
 
 I got a challenge from a company and due to my prioritization and commitments, I wasn't able to work on it before the deadline. I wrote them and explained the situation, telling them that I cannot interview with them any longer since I'm too busy with other companies.
 
@@ -206,7 +206,7 @@ Then, there was a coding challenge. I was asked to prepare my development enviro
 
 At first, things went quite badly. I wasn't as confident in Python as I thought I would be. I made a bunch of amateur mistakes in the first five minutes. But thanks to my test-driven approach, I was gradually gaining confidence. In the end, I finished on time with a working solution. Success! The CTO and VP of Engineering both commented on the solution being very succinct.
 
-Apparently, everyone was fairly impressed because suddenly the CEO was coming in and interviewing me. We spoke for over an hour. I asked about the main challenges and the future direction of the company. He asked what my expectations for the role and salary were. After a long afternoon, I left the interview room in a very good mood and expected an offer very soon. 
+Apparently, everyone was fairly impressed because suddenly the CEO was coming in and interviewing me. We spoke for over an hour. I asked about the main challenges and the future direction of the company. He asked what my expectations for the role and salary were. After a long afternoon, I left the interview room in a very good mood and expected an offer very soon.
 
 After two days, I got an email. They declined. I was quite surprised, wondering what I had done wrong. The person that got me the interview later found out that they were indeed impressed but didn't think they had a suitable role for me at the company at the moment.
 
@@ -242,7 +242,7 @@ The next morning, I got an offer. They told me, my offer was the highest salary 
 
 ### #4 & #5
 
-These interviews were very different from the others. 
+These interviews were very different from the others.
 
 In the first one, I talked to a development manager for about two hours. Since I had solved an online coding challenge beforehand, we focused on high-level questions. Interestingly, we talked a lot about how to pick tools and technologies. For example, how to decide between Angular and React.
 
@@ -275,7 +275,7 @@ I applied to 14 companies, talked to 8, interviewed at 5 and got an offer from 3
 Even though I was hesitant to talk to a recruiter at first, it helped me immensely. He didn't find me a job per se but gave me some insights about the local tech scene and HR best practices, I needed as a newcomer.
 
 **High-level matters:**
-Maybe it's because I applied for more senior positions only but in general, there were hardly any low-level questions during the on-site interviews. Interviewers were interested in how I design systems, object relations, and APIs. Sure, I had to actually code, too - but nobody cared to quiz me about what ACID is or had me code on a whiteboard.  
+Maybe it's because I applied for more senior positions only but in general, there were hardly any low-level questions during the on-site interviews. Interviewers were interested in how I design systems, object relations, and APIs. Sure, I had to actually code, too - but nobody cared to quiz me about what ACID is or had me code on a whiteboard.
 
 **Side projects are not _that_ helpful:**
 So at least for a senior developer, having a side project didn't seem to make much of a difference. Nobody asked anything about it. I tried to bring it up in my cover letter or during phone screenings for full-stack positions but I don't know if it had any effect. Even the Python-heavy companies didn't seem to care - which surprised me. Then again, one company wouldn't even interview me because I didn't have enough experience with their Python stack. So in the end, it didn't _really_ seem to help that much.
@@ -293,7 +293,7 @@ When the inevitable question "What are you most proud of?" comes up, it's your t
 In half of the interviews, I was instructed to prepare a development environment ahead of time. This is your chance to set yourself up for success. I pre-installed a bunch of helper libraries for the most common use cases like templating, making HTTP requests, and serving REST APIs. Another great idea is to have a test runner ready, running on every file save for continuous feedback.
 
 **Know complexity and scalability:**
-Every time I had to code something, I was asked about the time and space complexity as well as whether I can simply make it more efficient. Now and then, I was also asked what would happen if the input became gigantic so it wouldn't work on a single machine anymore. It's crucial to have answers here.  
+Every time I had to code something, I was asked about the time and space complexity as well as whether I can simply make it more efficient. Now and then, I was also asked what would happen if the input became gigantic so it wouldn't work on a single machine anymore. It's crucial to have answers here.
 
 **Simplify your resume:**
 First of all, my resume for the first batch of online applications was not good. It was too long and not 'easily scannable'. Since people in HR receive so many applications, they allegedly only look at a resume for 10-30 seconds. During most interviews, I could tell that the interviewer hadn't read my resume for more than one minute. People are busy. The lesson here is to make it _suuuuper_ easy to learn the most important facts about you. Basically, apply the lessons from [Don't Make Me Think](https://en.wikipedia.org/wiki/Don%27t_Make_Me_Think). If they judge you by keywords, put a lot of keywords in. This cannot be overstated.

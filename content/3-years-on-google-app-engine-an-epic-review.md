@@ -7,7 +7,7 @@ draft = false
 slug = "3-years-on-google-app-engine-an-epic-review"
 tags = ["cloud", "hosting", "java", "datastore", "google", "app-engine"]
 title = "3 years on Google App Engine. An Epic Review."
-
+disqus_identifier = 17
 +++
 
 For the last 3 years I worked on an application that runs on Google App Engine. It is a fascinating, unique piece of service Google is offering here. Unlike anything you'll find elsewhere. This is my in-depth, personal take on it.

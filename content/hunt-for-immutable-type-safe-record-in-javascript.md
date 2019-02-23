@@ -7,7 +7,7 @@ draft = false
 slug = "hunt-for-immutable-type-safe-record-in-javascript"
 tags = ["javascript", "flow", "babel"]
 title = "The hunt for an immutable, type safe data record in JavaScript"
-
+disqus_identifier = 14
 +++
 
 Ever since working with Scala's `case classes` I was hooked on the idea of having a type safe data record that was also immutable. What's not to like? It's type safe _and_ immutable (duh). So I wanted to see if I can get the same thing in JavaScript - the most mutable and dynamic language known to man.
@@ -192,12 +192,12 @@ class Person {
   }
 }
 
-type PersonInit = { 
+type PersonInit = {
   givenName: string;
   familyName: string;
 };
 
-type PersonUpdate = { 
+type PersonUpdate = {
   givenName?: string;
   familyName?: string;
 };
@@ -231,13 +231,13 @@ const daughter = dad.update({givnam: 'Lisa'};
 Apparently, this is a known limitation in Flow. The [workaround](https://github.com/facebook/flow/issues/1164) is to _seal_ the object type by adding a 'catch-all property' with a `void` type.
 
 ```javascript
-type PersonInit = { 
+type PersonInit = {
   givenName: string;
   familyName: string;
   [key: string]: void;
 };
 
-type PersonUpdate = { 
+type PersonUpdate = {
   givenName?: string;
   familyName?: string;
   [key: string]: void;
