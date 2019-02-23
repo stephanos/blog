@@ -1,0 +1,10 @@
+baseURL = "https://blog.stephanbehnke.com/"
+languageCode = "en-us"
+title = "This Programming Life"
+theme = "tale"
+publishDir = "docs"
+
+pygmentscodefences = true
+pygmentsuseclasses = true
+
+disqusShortname = "stephanos"

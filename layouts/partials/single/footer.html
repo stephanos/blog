@@ -1,0 +1,77 @@
+<style>
+  footer {
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .post-footer {
+    position: relative;
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: #EBF2F6 1px solid;
+  }
+
+  .author-image {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 44%;
+    margin: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    overflow: hidden;
+    padding: 6px;
+    background: #fff;
+    z-index: 2;
+    box-shadow: #E7EEF2 0 0 0 1px;
+  }
+
+  .author-image .img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
+  .post-footer h4 {
+    font-size: 1rem;
+  }
+
+  .post-footer p {
+    margin: 1rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .separator {
+    border-top: 0.5px solid #e5e5e5;
+    padding-top: 4rem;
+  }
+</style>
+
+<footer class="post-footer">
+
+  <figure class="author-image">
+    <a class="img" href="#" style="background-image: url(/images/2014/Aug/IMG_6131a-copy.jpg)"></a>
+  </figure>
+
+  <section class="author">
+    <h4>Stephan Behnke</h4>
+    <p>
+      Software developer by trade. Most of the time on the ever lasting quest for simplicity, elegance and beauty in code.
+      Or just getting stuff done in-between.
+    </p>
+  </section>
+
+</footer>
+
+<div class="separator"></div>
+
+{{ template "_internal/disqus.html" . }}

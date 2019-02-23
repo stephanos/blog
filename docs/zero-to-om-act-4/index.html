@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Zero to Om - Act 4 &middot; This Programming Life
+		</title>
+	
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="This Programming Life" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">This Programming Life</h2>
+				</a>
+				<ul>
+    <li><a href="/about">About</a></li>
+    <li><a href="/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Stephan Behnke
+        <br>
+        <span>on&nbsp;</span><time datetime="2014-09-18 08:57:00 &#43;0000 UTC">September 18, 2014</time>
+</div>
+		<h1 class="post-title">Zero to Om - Act 4</h1>
+<div class="post-line"></div>
+
+		<style>
+  main {
+    max-width: 650px;
+  }
+
+  .post h2 {
+    font-size: 2rem;
+    margin: 1.5em 0 0.5em 0;
+  }
+
+  .post p {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+
+  .nav-container ul {
+    display: none;
+  }
+</style>
+
+
+		
+
+<p>Until now the application is rather boring. It just displays data. But we want to actually use it! In this post we will take a look at how the app reacts (no pun intented) to user input. The source code can be found on <a href="https://github.com/stephanos/om-tutorial">GitHub</a>.</p>
+
+<p><strong>Note:</strong> I strongly recommend reading the <a href="/zero-to-om-act-3/">previous post</a> first if you haven&rsquo;t done so already.</p>
+
+<hr/>
+
+<p>Managing state is tricky. Each framework has its own mechanisms to detect and handle state changes. Here is Om&rsquo;s.</p>
+
+<h2 id="inner-state">Inner State</h2>
+
+<p>In this section we will look at how state inside the component can be managed.</p>
+
+<h3 id="component-state">Component State</h3>
+
+<p>In the previous post we&rsquo;ve already learned that components can have inner, transient state. In our example the <code>todo-item</code> component used the symbol <code>:edit-text</code> to assign the current text field&rsquo;s value. This snippet should refresh your memory:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn todo-item [todo owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:edit-text (:title todo)})
+
+    om/IRenderState
+    (render-state [_ state]
+      ...
+        (dom/input
+          #js {:className &#34;edit&#34;
+               :value (om/get-state owner :edit-text)
+               :onChange #(change % todo owner)
+               ...}))))))</code></pre></div>
+<p>Now, let&rsquo;s have a look at the event handler for <code>onChange</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn change [e todo owner]
+  (om/set-state! owner :edit-text (-&gt; e .-target .-value)))</code></pre></div>
+<p>The handler changes the <code>:edit-text</code> state to the input field&rsquo;s value. <code>-&gt;</code> is a macro which allows writing the statement without additional nesting (i.e. <code>(.-checked (.-target e))</code>) but on a &ldquo;thread&rdquo;. The snippet above shows one of two options to update a component&rsquo;s inner state:</p>
+
+<ul>
+<li><code>om/set-state!</code>: sets a new value</li>
+<li><code>om/update-state!</code>: applies an update function to the current value</li>
+</ul>
+
+<p>Both will trigger an Om re-rendering.</p>
+
+<h3 id="application-state">Application State</h3>
+
+<p>We&rsquo;ve learned earlier that the entire application state is kept in a single atom, the <em>root atom</em>. But we only pass a subset to a component (e.g. <code>todo</code> to <code>todo-item</code>). How do we keep the subsets in-sync with the root state?</p>
+
+<p>With <em>Cursors</em>! From Om&rsquo;s documentation:</p>
+
+<blockquote>
+<p>Cursors split one big mutable atom into smaller sub-atoms that remain in-sync with the state held in the root atom.</p>
+</blockquote>
+
+<p>Basically you can imagine a cursor a bit like a pointer to a portion of the root state. A component can apply changes to its cursor and the application state will change. When data in the application state changes - for example from an HTTP request - Om will re-render all components that depend on the changed value. Therefore the binding is two-way.</p>
+
+<p>To read values from a cursor you&rsquo;ll need to dereference it (eg <code>@my-cursor</code>) - except during the render phase (ie inside <code>render</code> and <code>render-state</code>) where it can be treated just like a regular value. To change a cursor value you have two options:</p>
+
+<ul>
+<li><code>om/update!</code>: sets a new value</li>
+<li><code>om/transact!</code>: applies an update function to the current value</li>
+</ul>
+
+<p>Let&rsquo;s see how this works in our app.</p>
+
+<p>The <code>todo-item</code> component contains a checkbox field which toggles the item&rsquo;s status. Its <code>onChange</code> event is handled here:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn complete [todo]
+  (om/transact! todo :completed #(not %)))</code></pre></div>
+<p>The <code>transact!</code> function receives (1) the component&rsquo;s cursor <code>todo</code> to the todo item, (2) the key <code>:completed</code> to specify which part of the data to change and (3) a function literal that simply negates the current value.</p>
+
+<p>Another example is in the main <code>todo-app</code> component. It also contains a checkbox but this one toggles the status of all items:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn toggle-all [e state]
+  (let [checked (-&gt; e .-target .-checked)]
+    (om/transact! state :todos
+	  (fn [todos] (vec (map #(assoc % :completed checked) todos))))))</code></pre></div>
+<p>Here the value of the checkbox binds to <code>checked</code>. The <code>transact!</code> update function uses <code>map</code> to return a sequence of todo items with the <code>completed</code> key set to <code>checked</code>. Don&rsquo;t forget: we are working with immutable data so both <code>map</code> and <code>assoc</code> do not modify the data but return new values.</p>
+
+<p><strong>Note:</strong> With <code>vec</code> we make sure that the return value is always a vector because Om&rsquo;s cursors only work with associate data structures (ie ClojureScript maps and indexed sequential data structures, such as the vector).</p>
+
+<p>To learn more about cursors I suggest reading <a href="https://github.com/swannodette/om/wiki/Cursors">Om&rsquo;s Cursor docs</a>.</p>
+
+<h2 id="outer-state">Outer State</h2>
+
+<p>Often the state we&rsquo;d like to manage will not be within direct reach of the component. The two mechanisms we&rsquo;ve learned above will not be enough then.</p>
+
+<h3 id="parent-components">Parent Components</h3>
+
+<p>Sometimes it is not feasible to change the application state since a sub-component often only has a cursor to a part of the state. Then one of its parents should be responsible. But how do they communicate with another?</p>
+
+<p>Usually, in JavaScript this is handled by callbacks or event bubbling. But in ClojureScript we have something even better: queue-like channels. The <a href="http://clojure.com/blog/2013/06/28/clojure-core-async-channels.html">Clojure blog</a> describes it perfectly:</p>
+
+<blockquote>
+<p>A key characteristic of channels is that they are blocking. In the most primitive form, an unbuffered channel acts as a rendezvous, any reader will await a writer and vice-versa.</p>
+</blockquote>
+
+<p>Basically, this allows us to easily synchronize two or more asynchronous actions - while writing sequential code. It all goes back to <a href="http://en.wikipedia.org/wiki/Communicating_sequential_processes">Tony Hoare&rsquo;s Communicating Sequential Processes (CSP)</a> from the 1970s. It recently gained popularity through an implementation in the <a href="http://golang.org/">Go programming language</a>.</p>
+
+<p>Channels are provided by the library <code>core.async</code>, made possible only by the power of macros. To get started, we need to load the library at the beginning of a file:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require        [cljs.core.async        :refer [put! &lt;! chan]])</code></pre></div>
+<p>The <code>todo-app</code> component uses the <code>will-mount</code> lifecycle function to create a new channel once the app is started:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn todo-app [{:keys [todos] :as state} owner]
+  (reify
+    om/IWillMount
+    (will-mount [_]
+      (let [comm (chan)]
+        (om/set-state! owner :comm comm)
+        (go (while true
+              (let [[type value] (&lt;! comm)]
+                (handle-event type state value))))))</code></pre></div>
+<p><code>(chan)</code> returns a new unbuffered channel. This is then added to the component&rsquo;s state with the key <code>:comm</code>. Finally, a <code>go</code> block is opened: inside we find an endless loop that reads a value from the channel with <code>(&lt;! comm)</code> and destructures it into a vector with two items, <code>[type value]</code>.</p>
+
+<p>It is important to note that reading from the channel is a blocking operation, waiting for data being sent through the channel forever. But wouldn&rsquo;t the app completely freeze since JavaScript is single-threaded? Well, that&rsquo;s why we need to wrap all <code>&lt;!</code> calls with <code>go</code>: it is a macro that allows to have small, contained event loops within the overall global event loop. The inner ones block while the global one keeps running.</p>
+
+<p><strong>Note:</strong> The <code>comm</code> channel is now passed to every function or component that needs it. To avoid confusion: all code snippets from the previous post omitted this.</p>
+
+<p>Back to our example. The data that was read from the channel is passed to <code>handle-event</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn handle-event [type state val]
+  (case type
+	:destroy (destroy-todo state val)
+	:edit    (edit-todo state val)
+	:save    (save-todos state)
+	:cancel  (cancel-action state)
+	nil))</code></pre></div>
+<p>The function uses <code>case</code> to select a form to execute based on the value of <code>type</code>. It handles all the events that the <code>todo-item</code> component might want to send. Let&rsquo;s have a look at one of its event handlers that fires when you click the red &lsquo;x&rsquo; on a todo item:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn destroy [todo comm]
+  (put! comm [:destroy @todo]))</code></pre></div>
+<p>It uses <code>put!</code> to send the vector <code>[:destroy @todo]</code> over the channel. Notice the <code>@</code> that dereferences the cursor beforehand - so the value is sent, not the cursor. It is then read by the endless loop we saw above, passed to the <code>handle-event</code> and finally ends up as a parameter to <code>destroy-todo</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn destroy-todo [state {:keys [id]}]
+  (om/transact! state :todos
+	(fn [todos] (vec (remove #(= (:id %) id) todos)))))</code></pre></div>
+<p>Here we see that the state cursor and the todo&rsquo;s id are used to update the application state. The todos are replaced by a copy of all todos, excluding any item that has the passed-in id. Remember, the function literal can also be written as <code>(fn [todo] (= (:id todo) id))</code>.</p>
+
+<p>The other functions in <code>handle-event</code> basically all work the same way, nothing we haven&rsquo;t seen by now already.</p>
+
+<p>This just scratched the surface of the possibilities of channels. To learn more about channels I suggest reading <a href="http://rigsomelight.com/2013/07/18/clojurescript-core-async-todos.html">ClojureScript core.async todos</a> and trying out this <a href="https://github.com/swannodette/hs-async/blob/master/src/hs_async/core.cljs">source code example</a>.</p>
+
+<h3 id="dom-nodes">DOM nodes</h3>
+
+<p>There comes a time in every app when you need to work with an actual DOM node, eg reading and changing its value. By using the <code>ref</code> keyword, a <em>reference name</em> can be assigned to a node. Later, for example in an event handler, the node can be accessed by this name.</p>
+
+<p>In our app we need this for the &lsquo;new&rsquo; text field of the <code>todo-app</code> component. Here with the newly added <code>ref</code> key:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(dom/input
+  #js {:id &#34;new-todo&#34; 
+       :ref &#34;newField&#34; 
+       :onKeyDown #(enter-new-todo % state owner)}
+       ...}
+  ...</code></pre></div>
+<p>With the <code>ref</code> in place, the event handler <code>enter-new-todo</code> can access the node:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn enter-new-todo [e state owner]
+  (when (== (.-which e) ENTER_KEY)
+	(let [new-field      (om/get-node owner &#34;newField&#34;)
+		  new-field-text (string/trim (.-value new-field))]
+	  (when-not (string/blank? new-field-text)
+	 	(let [new-todo {:id (guid)
+                        :title new-field-text
+		 				:completed false}]
+			(om/transact! state :todos #(conj % new-todo)))
+		(set! (.-value new-field) &#34;&#34;)))
+	false))</code></pre></div>
+<p>When the user hits the enter key it creates a new todo: by using <code>om/get-node</code> with the parameters <code>owner</code> (the underlying React component) and <code>newField</code> (the reference name) the text field (a native browser DOM node) can be retrieved. Calling <code>.-value</code> on the node reads its text content. If it is not empty a new item is created and saved to the application state via <code>om/transact!</code>. Finally, the input&rsquo;s value is reset.</p>
+
+<p>Another example is the &lsquo;edit&rsquo; text field of the <code>todo-item</code> component, now with the added <code>ref</code> key:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(dom/input
+  #js {:ref &#34;editField&#34; :className &#34;edit&#34; ...}
+  ...</code></pre></div>
+<p>On double-clicking the todo label the <code>edit</code> event handler is called:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn edit [e todo owner comm]
+  (let [todo @todo
+        node (om/get-node owner &#34;editField&#34;)]
+    (put! comm [:edit todo])
+    (doto owner
+      (om/set-state! :needs-focus true)
+      (om/set-state! :edit-text (:title todo)))))</code></pre></div>
+<p>There&rsquo;s a lot going on! The <code>todo</code> symbol binds to the dereferenced cursor and <code>node</code> to the input&rsquo;s DOM node. The vector <code>[:edit todo]</code> is written to the channel with <code>put!</code> (and handled by the <code>handle-event</code> function we saw earlier), putting the app into &lsquo;editing&rsquo; mode. At last, the component state is updated to reflect the editing of the todo.</p>
+
+<p><strong>Note:</strong> <code>doto</code> takes <code>owner</code> and calls the function of each subsequent form  with it as the first parameter.</p>
+
+<p>If you want to learn more about refs I have just what you need: <a href="http://facebook.github.io/react/docs/more-about-refs.html">More About Refs</a>.</p>
+
+<hr/>
+
+<p>This concludes today&rsquo;s act! We have seen how state is managed in Om. We didn&rsquo;t look into <em>every</em> line of the example app but you saw the most important parts. Feel free to browse the <a href="https://github.com/stephanos/om-tutorial">full source code</a> to explore the rest of it.</p>
+
+<p>In <strong><a href="/zero-to-om-act-5/">Act 5</a></strong> we&rsquo;ll learn how to publish the app properly. Meanwhile, here are a few links to dive deeper into Om:</p>
+
+<ul>
+<li><a href="http://blog.getprismatic.com/om-sweet-om-high-functional-frontend-engineering-with-clojurescript-and-react/">Om sweet Om</a>, describes Om&rsquo;s benefits in a real-life project</li>
+<li><a href="https://github.com/swannodette/om/wiki/Basic-Tutorial">Basic Om Tutorial</a>, an example-driven tutorial from David Nolen</li>
+<li><a href="vimeo.com/97516219">Functional UI programming with React.JS and ClojureScript</a>, shows how to build an UI for the minesweeper game from scratch</li>
+<li><a href="https://github.com/swannodette/om/wiki/Documentation">Om&rsquo;s API docs</a></li>
+</ul>
+
+
+		<style>
+  footer {
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .post-footer {
+    position: relative;
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: #EBF2F6 1px solid;
+  }
+
+  .author-image {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 44%;
+    margin: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    overflow: hidden;
+    padding: 6px;
+    background: #fff;
+    z-index: 2;
+    box-shadow: #E7EEF2 0 0 0 1px;
+  }
+
+  .author-image .img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
+  .post-footer h4 {
+    font-size: 1rem;
+  }
+
+  .post-footer p {
+    margin: 1rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .separator {
+    border-top: 0.5px solid #e5e5e5;
+    padding-top: 4rem;
+  }
+</style>
+
+<footer class="post-footer">
+
+  <figure class="author-image">
+    <a class="img" href="#" style="background-image: url(/images/2014/Aug/IMG_6131a-copy.jpg)"></a>
+  </figure>
+
+  <section class="author">
+    <h4>Stephan Behnke</h4>
+    <p>
+      Software developer by trade. Most of the time on the ever lasting quest for simplicity, elegance and beauty in code.
+      Or just getting stuff done in-between.
+    </p>
+  </section>
+
+</footer>
+
+<div class="separator"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "stephanos" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	</div>
+
+	<div class="pagination">
+		<a href="/zero-to-om-act-3/" class="left arrow">&#8592;</a>
+		<a href="/zero-to-om-act-5/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-02-23 14:20:18.296222 -0800 PST m=&#43;0.225426035">2019</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

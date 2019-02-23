@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Zero to Om - Act 5 &middot; This Programming Life
+		</title>
+	
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="This Programming Life" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">This Programming Life</h2>
+				</a>
+				<ul>
+    <li><a href="/about">About</a></li>
+    <li><a href="/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Stephan Behnke
+        <br>
+        <span>on&nbsp;</span><time datetime="2014-09-25 12:51:00 &#43;0000 UTC">September 25, 2014</time>
+</div>
+		<h1 class="post-title">Zero to Om - Act 5</h1>
+<div class="post-line"></div>
+
+		<style>
+  main {
+    max-width: 650px;
+  }
+
+  .post h2 {
+    font-size: 2rem;
+    margin: 1.5em 0 0.5em 0;
+  }
+
+  .post p {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+
+  .nav-container ul {
+    display: none;
+  }
+</style>
+
+
+		
+
+<p>In this part we will have a closer look at the app&rsquo;s build configuration and discover what it can do for us. The source code can be found on <a href="https://github.com/stephanos/om-tutorial/tree/act-5">GitHub</a>.</p>
+
+<p><strong>Note:</strong> I strongly recommend reading the <a href="/zero-to-om-act-4">previous post</a> first if you haven&rsquo;t done so already.</p>
+
+<hr/>
+
+<h2 id="the-build-config">The Build Config</h2>
+
+<p>The project&rsquo;s build configuration is defined in <code>project.clj</code>. It is written in Clojure and looks like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; project.clj, part 1
+(defproject todomvc &#34;0.1.0-SNAPSHOT&#34;
+
+  :jvm-opts ^:replace [&#34;-Xms4g&#34; &#34;-Xmx4g&#34; &#34;-server&#34;]
+
+  :dependencies [[org.clojure/clojure &#34;1.6.0&#34;]
+                 [org.clojure/clojurescript &#34;0.0-2280&#34;]
+                 [org.clojure/core.async &#34;0.1.267.0-0d7780-alpha&#34;]
+				 [secretary &#34;1.2.0&#34;]
+                 [om &#34;0.7.1&#34;]]
+
+  :plugins [[lein-cljsbuild &#34;1.0.4-SNAPSHOT&#34;]]</code></pre></div>
+<p>Basically, it&rsquo;s just one big map of vectors. The <code>dependencies</code> are automatically loaded from Leiningen. <code>cljsbuild</code> is a plugin that allows to compile ClojureScript to JavaScript - its configuration is:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; project.clj, part 2
+:source-paths [&#34;src&#34;]
+
+:cljsbuild { 
+  :builds [{:id &#34;dev&#34;
+            :source-paths [&#34;src&#34;]
+            :compiler {
+              :output-to &#34;app.js&#34;
+              :output-dir &#34;out&#34;
+              :optimizations :none
+              :source-map true}}]})</code></pre></div>
+<p>Earlier we&rsquo;ve learned that to build the application we can use <code>lein cljsbuild once dev</code>. The command starts Leiningen and executes the <code>dev</code> build profile of the <code>cljsbuild</code> exactly once. If we use <code>auto</code> instead, it watches the source paths for any changes and triggers a build. Very handy during development.</p>
+
+<p>If you look into the <code>out</code> folder in the project&rsquo;s root directory after a build, you&rsquo;ll see that there is a folder for every dependency we&rsquo;ve specified. Inside you&rsquo;ll find the library&rsquo;s source files, in ClojureScript and JavaScript. Additionally, the Google Closure library files can be found in the <code>goog</code> directory.</p>
+
+<p><strong>Note:</strong> The <code>source-map</code> option tells the plugin to generate a <code>&lt;file-name&gt;.js.map</code> file for each compiled file. This allows the browser to show you the corresponding ClojureScript source code instead of an incomprehensible jumble of JavaScript code when there is a runtime error.</p>
+
+<h2 id="publishing">Publishing</h2>
+
+<p>There will come a time when you want to publish your application and share it with the world. The <code>out</code> folder contains roughly <strong>2 MB of JavaScript</strong>. Not to mention that they are scattered throughout 88 separate files. Sounds like the requirements for a browser benchmark, not like a usable web application!</p>
+
+<p>So we need to reduce the number of files and the total file size. That&rsquo;s where the Google Closure Compiler can help us. Below you&rsquo;ll find a new build profile called <code>release</code> which will solve all of our problems:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">:cljsbuild { 
+	:builds [{:id &#34;dev&#34;
+						...}
+
+					{:id &#34;release&#34;
+					 :source-paths [&#34;src&#34;]
+					 :compiler {
+					 :output-to &#34;out/app.min.js&#34;
+					 :optimizations :advanced
+					 :elide-asserts true
+					 :pretty-print false
+					 	:source-map &#34;app.js.map&#34;
+				:externs [&#34;src/react-externs.js&#34;]}}]}</code></pre></div>
+<p>In contrast to the <code>dev</code> profile it outputs a single file, uses advanced optimizations, removes assertions and does not pretty print the JavaScript code. To run this build profile we use <code>lein cljsbuild once release</code>. It takes noticeable longer than the development profile but we&rsquo;ll only run this when we actually want to publish the app anyway.</p>
+
+<p><strong>Note:</strong> The Closure Compiler is the bulldog among minifiers: very aggressive, stopping for no one. That&rsquo;s why you need to tell it what code it should NOT remove by using &lsquo;externs files&rsquo;, such as <a href="https://github.com/swannodette/react-cljs/blob/master/src/react/externs/react.js">react-extern.js</a> in our case.</p>
+
+<p>The following table gives you a feeling for the influence that the different options have on the final result. It shows the file sizes for the different &lsquo;modes&rsquo; the Closure Compiler offers:</p>
+
+<table style="width: 90%; margin: 0 auto;">
+  <col width="50%" />
+  <col width="25%" />
+  <col width="25%" />
+  <tr>
+    <td>
+      <strong>mode</strong>
+    </td>
+    <td>
+      <strong>size</strong>
+    </td>
+    <td>
+      <strong>gzip size</strong>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        whitespace
+    </td>
+    <td>
+      1343 KB
+    </td>
+    <td>
+      180 KB
+    </td>
+  </tr>
+  <tr>
+    <td>
+      simple
+    </td>
+    <td>
+      858 KB
+    </td>
+    <td>
+      119 KB
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 33%">
+      advanced
+    </td>
+    <td style="width: 33%">
+      192 KB
+    </td>
+    <td style="width: 33%">
+      47 KB
+    </td>
+  </tr>
+</table>
+
+<p><br/></p>
+
+<p>The advanced mode reduces the file size by roughly 78% compared to the simple mode. The Closure Compiler achieves this minification by making a dead code analysis: removing JavaScript code that won&rsquo;t be used by the app.</p>
+
+<p>So the best result we can expect is 47 KB gzipped. Sounds reasonable. For comparison, without the option <code>:elide-asserts true</code> the result for advanced mode grows to 195 KB (48 KB gzipped). Without setting <code>:pretty-print false</code> it even grows to 275 KB (53 KB gzipped).</p>
+
+<p>Of course there is one thing we&rsquo;ve left out: the footprint of the React library. The minified version is 123 KB (34 KB gzipped). That makes 81 KB gzipped in total. I&rsquo;ll let you decide for yourself whether this would be an acceptable value for <em>your</em> app :)</p>
+
+<p><br/></p>
+
+<p><strong>Tip of the Day:</strong> Leiningen allows you to specify an alias for single or multiple commands. This way, we can just create a <code>publish</code> command that runs a build using the release profile - and does a cleanup beforehand:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">:aliases {
+  &#34;publish&#34; [&#34;do&#34; [&#34;cljsbuild&#34; &#34;clean&#34;] [&#34;cljsbuild&#34; &#34;once&#34; &#34;release&#34;]]
+}</code></pre></div>
+<h2 id="outlook">Outlook</h2>
+
+<p>There is a project called <a href="https://github.com/thheller/shadow-build">shadow-build</a> that allows you to split the final JavaScript file into multiple files, eg putting the common code (like the standard library) into one file and the rest into separate files. Then you could have separate &lsquo;areas&rsquo; in your application. For example, a user who doesn&rsquo;t go to the admin section won&rsquo;t need to download the source code for it. Currently, getting this functionality into ClojureScript directly is <a href="http://dev.clojure.org/display/design/Google+Closure+Modules">being discussed</a>.</p>
+
+<hr/>
+
+<p>This concludes our journey through the build facilities. Finally, I recommend glancing over the <a href="https://github.com/emezeske/lein-cljsbuild/blob/master/sample.project.clj">cljsbuild sample</a> once. It documents all the possible options of the ClojureScript plugin.</p>
+
+<p>In <a href="/zero-to-om-6"><strong>Act 6</strong></a> we&rsquo;ll have a look at libraries that help us create better Om applications!</p>
+
+
+		<style>
+  footer {
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .post-footer {
+    position: relative;
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: #EBF2F6 1px solid;
+  }
+
+  .author-image {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 44%;
+    margin: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    overflow: hidden;
+    padding: 6px;
+    background: #fff;
+    z-index: 2;
+    box-shadow: #E7EEF2 0 0 0 1px;
+  }
+
+  .author-image .img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
+  .post-footer h4 {
+    font-size: 1rem;
+  }
+
+  .post-footer p {
+    margin: 1rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .separator {
+    border-top: 0.5px solid #e5e5e5;
+    padding-top: 4rem;
+  }
+</style>
+
+<footer class="post-footer">
+
+  <figure class="author-image">
+    <a class="img" href="#" style="background-image: url(/images/2014/Aug/IMG_6131a-copy.jpg)"></a>
+  </figure>
+
+  <section class="author">
+    <h4>Stephan Behnke</h4>
+    <p>
+      Software developer by trade. Most of the time on the ever lasting quest for simplicity, elegance and beauty in code.
+      Or just getting stuff done in-between.
+    </p>
+  </section>
+
+</footer>
+
+<div class="separator"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "stephanos" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	</div>
+
+	<div class="pagination">
+		<a href="/zero-to-om-act-4/" class="left arrow">&#8592;</a>
+		<a href="/zero-to-om-6/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-02-23 14:20:18.295589 -0800 PST m=&#43;0.224793565">2019</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

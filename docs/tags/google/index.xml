@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Google on This Programming Life</title>
+    <link>https://blog.stephanbehnke.com/tags/google/</link>
+    <description>Recent content in Google on This Programming Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 13 Mar 2017 15:23:59 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.stephanbehnke.com/tags/google/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>3 years on Google App Engine. An Epic Review.</title>
+      <link>https://blog.stephanbehnke.com/3-years-on-google-app-engine-an-epic-review/</link>
+      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/3-years-on-google-app-engine-an-epic-review/</guid>
+      <description>For the last 3 years I worked on an application that runs on Google App Engine. It is a fascinating, unique piece of service Google is offering here. Unlike anything you&amp;rsquo;ll find elsewhere. This is my in-depth, personal take on it.
+Google&amp;rsquo;s Cloud (est. 2008) First of all, what is Google App Engine (GAE) actually? It is a platform to run your web applications on. Like Heroku. But different when you look closer.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Job on This Programming Life</title>
+    <link>https://blog.stephanbehnke.com/tags/job/</link>
+    <description>Recent content in Job on This Programming Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 11 Nov 2017 17:54:31 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.stephanbehnke.com/tags/job/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How I Learned to Stop Worrying and Love the Job Hunt</title>
+      <link>https://blog.stephanbehnke.com/how-i-learned-to-stop-worrying-and-love-the-job-hunt-in-toronto/</link>
+      <pubDate>Sat, 11 Nov 2017 17:54:31 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/how-i-learned-to-stop-worrying-and-love-the-job-hunt-in-toronto/</guid>
+      <description>This is a story about finding a job as a senior software engineer in Toronto - with a twist: just having moved there from Germany.
+I was prepared. I had a plan. But it failed completely - at first. I had to adapt and learn. It was a roller coaster ride.
+I tell my story because it might help others learn from my mistakes. This is not meant as a bigger statement about immigration or the state of the tech scene.</description>
+    </item>
+    
+  </channel>
+</rss>

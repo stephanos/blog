@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Zero to Om &middot; This Programming Life
+		</title>
+	
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="This Programming Life" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">This Programming Life</h2>
+				</a>
+				<ul>
+    <li><a href="/about">About</a></li>
+    <li><a href="/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Stephan Behnke
+        <br>
+        <span>on&nbsp;</span><time datetime="2014-08-25 15:41:00 &#43;0000 UTC">August 25, 2014</time>
+</div>
+		<h1 class="post-title">Zero to Om</h1>
+<div class="post-line"></div>
+
+		<style>
+  main {
+    max-width: 650px;
+  }
+
+  .post h2 {
+    font-size: 2rem;
+    margin: 1.5em 0 0.5em 0;
+  }
+
+  .post p {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+
+  .nav-container ul {
+    display: none;
+  }
+</style>
+
+
+		
+
+<p>This is the first part of a series of blog posts about Om. If you don&rsquo;t know anything about Om, don&rsquo;t worry! You&rsquo;ll learn everything step by step. Here are the basics: <em>Om is a ClojureScript interface to Facebook&rsquo;s React</em>. If that doesn&rsquo;t ring any bells, again, don&rsquo;t worry!</p>
+
+<p><strong>NOTE</strong>: I <em>just</em> started learning React.js, ClojureScript and Om. So this is my way of trying to learn this myself: By taking you on the ride with me. Basic knowledge about modern web development is required, though.</p>
+
+<h2 id="the-stage">The Stage</h2>
+
+<p>Learning by doing is fun. We are going to learn Om with the help of a little todo app.</p>
+
+<p>If you are a web developer and haven&rsquo;t heard of <a href="http://todomvc.com/">TodoMVC</a> yet you were either unemployed or in a coma for the last few years (you didn&rsquo;t miss much except for React.js). It&rsquo;s a &ldquo;project which offers the same Todo application implemented [&hellip;] in most of the popular JavaScript frameworks of today&rdquo;.</p>
+
+<p>This is how it looks:
+<img src="/images/2014/Aug/todos.png" alt="" /></p>
+
+<p>As the foundation of this series I will use an <a href="https://github.com/swannodette/todomvc/tree/gh-pages/labs/architecture-examples/om">implementation of the Todo app</a> written by the creator of Om himself, <a href="https://github.com/swannodette">David Nolen</a>. You can <a href="http://swannodette.github.io/todomvc/labs/architecture-examples/om/">play with the app</a> to see what it can do.</p>
+
+<h2 id="the-actors">The Actors</h2>
+
+<p>Let&rsquo;s see what technologies we need for our endeavour.</p>
+
+<h3 id="react-js">React.js</h3>
+
+<p><img src="/images/2014/Aug/logo_og.png" alt="" /></p>
+
+<p><a href="http://facebook.github.io/react/">React.js</a> is a JavaScript library from Facebook for building user interfaces. Think of it as the V in MVC. It keeps data and DOM in-sync and is <em>very</em> efficiently at it by using an in-memory (virtual) DOM to batch all updates at once. That&rsquo;s exactly how 3D engines work as well.</p>
+
+<h3 id="clojurescript">ClojureScript</h3>
+
+<p><img src="/images/2014/Aug/apple-touch-icon-precomposed-1.png" alt="" /></p>
+
+<p><a href="https://github.com/clojure/ClojureScript">ClojureScript</a> is a Clojure dialect that compiles to JavaScript. It is a dynamically typed, functional programming language with a strong focus on immutable data structures.</p>
+
+<h3 id="google-closure-tools">Google Closure Tools</h3>
+
+<p><img src="/images/2014/Aug/closure.png" alt="" /></p>
+
+<p><a href="https://developers.google.com/closure/">Google Closure Tools</a> consist of a JavaScript library with utilities for rich, cross-browser web applications and a compiler for optimizing JavaScript.</p>
+
+<h3 id="light-table">Light Table</h3>
+
+<p><img src="/images/2014/Aug/logo.png" alt="" /></p>
+
+<p><a href="http://www.lighttable.com/">Light Table</a> is an open source IDE mainly geared towards Clojure/ClojureScript development. One of its most interesting features is the inline evaluation of code.</p>
+
+<h3 id="leiningen">Leiningen</h3>
+
+<p><img src="/images/2014/Aug/leiningen-full.jpg" alt="" /></p>
+
+<p><a href="http://leiningen.org/">Leiningen</a> is a JVM-based build tool for Clojure. Its <a href="https://github.com/emezeske/lein-cljsbuild">cljsbuild</a> plugin automates compiling ClojureScript into JavaScript.</p>
+
+<h3 id="om">Om</h3>
+
+<p>Finally, <a href="https://github.com/swannodette/om">Om</a> is the magic goo that combines the functional nature of React with the functional language ClojureScript and its immutable data structures, simplifying application architecture and increasing performance significantly in the process.</p>
+
+<h2 id="act-1">Act 1</h2>
+
+<p>At first, let&rsquo;s try to run the application. If we checkout my - slightly modified version of the original - <a href="https://github.com/stephanos/om-tutorial">from GitHub</a> - we&rsquo;ll see a bunch of files:</p>
+
+<pre><code>bower_components/
+   todomvc-common/
+src/
+   todomvc/
+      app.cljs
+      item.cljs
+      utils.cljs
+bower.json
+index.html
+project.clj
+readme.md
+</code></pre>
+
+<p><code>bower.json</code> is the manifest file for <a href="http://bower.io/">Bower</a> which manages external resources. In this case it downloaded a stylesheet and an image into <code>todomvc-common</code> for us.</p>
+
+<p><code>index.html</code> is the HTML file we open in our browser to showcase our app. So let&rsquo;s go for it!</p>
+
+<p>And &hellip; <strong>darn</strong>!</p>
+
+<pre><code>GET file:///.../out/goog/base.js net::ERR_FILE_NOT_FOUND index.html:15
+GET file:///.../app.js net::ERR_FILE_NOT_FOUND index.html:16
+Uncaught ReferenceError: goog is not defined 
+</code></pre>
+
+<p>Well, let&rsquo;s look at the file to see what might have gone wrong:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-markup" data-lang="language-markup">&lt;head&gt;
+  [...]
+  &lt;link rel=&#34;stylesheet&#34; href=&#34;bower_components/todomvc-common/base.css&#34;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;section id=&#34;todoapp&#34;&gt;&lt;/section&gt;
+  [...]
+  &lt;script src=&#34;http://fb.me/react-0.11.1.js&#34;&gt;&lt;/script&gt;
+  &lt;script src=&#34;out/goog/base.js&#34;&gt;&lt;/script&gt;
+  &lt;script src=&#34;app.js&#34;&gt;&lt;/script&gt;
+  &lt;script&gt;goog.require(&#34;todomvc.app&#34;);&lt;/script&gt;
+&lt;/body&gt;</code></pre></div>
+<p>The file loads a bunch of scripts and if you look at our current directory you&rsquo;ll quickly notice: most of them don&rsquo;t exist, yet. We need to build them first!</p>
+
+<p>That&rsquo;s where we need <code>project.clj</code>. It contains the project&rsquo;s build configuration for Leiningen. Next, we run:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-bash" data-lang="language-bash">$ leiningen cljsbuild once dev
+Compiling ClojureScript.
+Compiling &#34;app.js&#34; from [&#34;src&#34;]...</code></pre></div>
+<p>Now we have a new file called <code>app.js</code> and a folder <code>out</code> with lots of files in it. If we refresh the browser the issues are gone and we gaze upon a functioning Todo app. Splendid!</p>
+
+<p>If we look into <code>app.js</code> we&rsquo;ll see something like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-language-javascript" data-lang="language-javascript">goog.addDependency(&#34;base.js&#34;, [&#39;goog&#39;], []);
+goog.addDependency(&#34;../cljs/reader.js&#34;, [&#39;cljs.reader&#39;], [&#39;goog.string&#39;, &#39;cljs.core&#39;]);
+goog.addDependency(&#34;../om/dom.js&#34;, [&#39;om.dom&#39;], [&#39;cljs.core&#39;]);
+[...]</code></pre></div>
+<p>This is Google Closure at work. It features a <em>module loader</em>. Every ClojureScript file translates into a Closure module. Each module can depend on numerous other modules. The loader is found in <code>out/goog/base.js</code>. All the app&rsquo;s dependencies are defined in <code>app.js</code>. To kickstart our app we need to load the main module: <code>goog.require(&quot;todomvc.app&quot;)</code>. And that is exactly what the <code>index.html</code> does.</p>
+
+<hr/>
+
+<p>This concludes the first act.
+In <a href="/zero-to-om-act-2/"><strong>Act 2</strong></a> we will look at the ClojureScript source code in detail.</p>
+
+
+		<style>
+  footer {
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .post-footer {
+    position: relative;
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: #EBF2F6 1px solid;
+  }
+
+  .author-image {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 44%;
+    margin: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    overflow: hidden;
+    padding: 6px;
+    background: #fff;
+    z-index: 2;
+    box-shadow: #E7EEF2 0 0 0 1px;
+  }
+
+  .author-image .img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
+  .post-footer h4 {
+    font-size: 1rem;
+  }
+
+  .post-footer p {
+    margin: 1rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .separator {
+    border-top: 0.5px solid #e5e5e5;
+    padding-top: 4rem;
+  }
+</style>
+
+<footer class="post-footer">
+
+  <figure class="author-image">
+    <a class="img" href="#" style="background-image: url(/images/2014/Aug/IMG_6131a-copy.jpg)"></a>
+  </figure>
+
+  <section class="author">
+    <h4>Stephan Behnke</h4>
+    <p>
+      Software developer by trade. Most of the time on the ever lasting quest for simplicity, elegance and beauty in code.
+      Or just getting stuff done in-between.
+    </p>
+  </section>
+
+</footer>
+
+<div class="separator"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "stephanos" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	</div>
+
+	<div class="pagination">
+		<a href="/talk-bedcon-2014-golang/" class="left arrow">&#8592;</a>
+		<a href="/zero-to-om-act-2/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-02-23 14:20:18.29728 -0800 PST m=&#43;0.226484726">2019</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

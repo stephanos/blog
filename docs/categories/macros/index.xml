@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Macros on This Programming Life</title>
+    <link>https://blog.stephanbehnke.com/categories/macros/</link>
+    <description>Recent content in Macros on This Programming Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 Jan 2013 11:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.stephanbehnke.com/categories/macros/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Scala Macros Use Case: Teaching Scala</title>
+      <link>https://blog.stephanbehnke.com/scala-macros-use-case-teaching-scala/</link>
+      <pubDate>Mon, 28 Jan 2013 11:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/scala-macros-use-case-teaching-scala/</guid>
+      <description>The brand new experimental macro feature in Scala 2.10 can be used in many interesting ways:
+ writing concise test cases, generating serialization code inlining methods  This article shows exciting new possibilities it opens up for teaching Scala. To quote one student: &amp;ldquo;This is so awesome &amp;hellip; and fun!&amp;rdquo;.
+Exercises are a crucial part of the &amp;ldquo;Introduction to Scala&amp;rdquo; training course I developed for German-speaking software engineers. Nobody wants to listen to someone else&amp;rsquo;s dialog for 8 hours - they want to get a feeling for the new language, try out the new syntax, play around with new features.</description>
+    </item>
+    
+  </channel>
+</rss>

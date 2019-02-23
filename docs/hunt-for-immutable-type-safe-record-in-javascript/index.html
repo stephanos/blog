@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="javascript immutablejs babel">
+	
+		<title>
+				The hunt for an immutable, type safe data record in JavaScript &middot; This Programming Life
+		</title>
+	
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="This Programming Life" />
+	</head>
+	
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">This Programming Life</h2>
+				</a>
+				<ul>
+    <li><a href="/about">About</a></li>
+    <li><a href="/">Posts</a></li>
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Stephan Behnke
+        <br>
+        <span>on&nbsp;</span><time datetime="2016-03-06 15:29:39 &#43;0000 UTC">March 6, 2016</time>
+</div>
+		<h1 class="post-title">The hunt for an immutable, type safe data record in JavaScript</h1>
+<div class="post-line"></div>
+
+		<style>
+  main {
+    max-width: 650px;
+  }
+
+  .post h2 {
+    font-size: 2rem;
+    margin: 1.5em 0 0.5em 0;
+  }
+
+  .post p {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+
+  .nav-container ul {
+    display: none;
+  }
+</style>
+
+
+		
+
+<p>Ever since working with Scala&rsquo;s <code>case classes</code> I was hooked on the idea of having a type safe data record that was also immutable. What&rsquo;s not to like? It&rsquo;s type safe <em>and</em> immutable (duh). So I wanted to see if I can get the same thing in JavaScript - the most mutable and dynamic language known to man.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">givenName</span><span class="p">;</span>
+  <span class="nx">familyName</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This will serve as our starting point: a simple class in JavaScript. It contains two class instance fields according to the <a href="https://github.com/jeffmo/es-class-fields-and-static-properties">ES Class Fields &amp; Static Properties ES7</a> proposal. Also, it is mutable. After an instance of <code>Person</code> is created, its fields can be changed.</p>
+
+<h2 id="immutable-js">immutable.js</h2>
+
+<p>Facebook&rsquo;s JavaScript library <a href="http://facebook.github.io/immutable-js/">immutable</a> offers an immutable <code>Record</code> data type. Let&rsquo;s see how far it takes us.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">Record</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">familyName</span><span class="o">:</span> <span class="s1">&#39;&#39;</span> <span class="p">});</span>
+</code></pre></div>
+<p>That&rsquo;s how we define our record. If you ask me, it seems strange to be required to provide default values in order to define the record structure. It mixes two concerns: structure definition and default values. Consequently, we can&rsquo;t require a property to be provided; there is always a default value.</p>
+
+<p>Anyway, it&rsquo;s nice that we can access each property directly and are not forced to use something like <code>.get()</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">dad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span><span class="p">,</span> <span class="nx">familyName</span><span class="o">:</span> <span class="s1">&#39;Simpson&#39;</span> <span class="p">});</span>
+<span class="nx">dad</span><span class="p">.</span><span class="nx">givenName</span> <span class="c1">// &#39;Homer&#39;
+</span></code></pre></div>
+<p>What is very surprising is that there is no runtime error when constructing a record with any additional properties.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">dad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="mi">40</span> <span class="p">});</span>
+<span class="nx">dad</span><span class="p">.</span><span class="nx">age</span> <span class="c1">// undefined
+</span></code></pre></div>
+<p>I find this quite dangerous. Maybe we can make it less problematic by adding type safety?</p>
+
+<blockquote>
+<p><strong>Type safety in JavaScript?</strong> There are currently two serious efforts to bring type safety to JavaScript: <a href="http://www.typescriptlang.org">TypeScript</a> and <a href="http://flowtype.org">Flow</a>. From what I&rsquo;ve seen so far, the syntax of them is almost identical.</p>
+</blockquote>
+
+<p>I&rsquo;ve picked Flow for this since it seemed easier to get started with and also works well with Babel. TypeScript might work as well though.</p>
+
+<p>There is an <a href="https://github.com/facebook/immutable-js/issues/203">pending issue</a> to have proper Flow type definitions for <code>immutable</code> but using its current state already works quite well.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">dad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="mi">42</span> <span class="p">});</span>
+<span class="c1">// type error: number is incompatible with string
+</span><span class="c1"></span>
+<span class="k">const</span> <span class="nx">dad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="mi">42</span> <span class="p">});</span>
+<span class="c1">// type error: property `age` not found
+</span></code></pre></div>
+<p>That&rsquo;s quite nice! We get checks for wrong data types and unknown initialisation properties.</p>
+
+<p>Unfortunately, the property access doesn&rsquo;t seem to get checked properly.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">dad</span><span class="p">.</span><span class="nx">age</span>
+<span class="c1">// type checks OK, returns undefined
+</span></code></pre></div>
+<p>All in all, we can get quite far with <code>Record</code>. But it&rsquo;s not perfect.</p>
+
+<h2 id="babel">Babel</h2>
+
+<p>It seems we can&rsquo;t reach our goal by writing code, we need to transform code. Since JavaScript doesn&rsquo;t have macros to do that, we take the next best thing: a Babel plugin.</p>
+
+<blockquote>
+<p><strong>What&rsquo;s Babel?</strong>
+<a href="https://babeljs.io">Babel</a> was born as a transpiler that takes modern JavaScript code and emits code that can run on older platforms where some of the latest feature weren&rsquo;t supported yet. But it has since grown to become a more general code transformation and code generation platform.</p>
+</blockquote>
+
+<p>The plugin needs to know which class to make immutable and which to ignore. So we create a new decorator to mark the class for transformation:</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="err">@</span><span class="nx">Record</span><span class="p">()</span>
+<span class="k">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">givenName</span><span class="p">;</span>
+  <span class="nx">familyName</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Our Babel plugin will look for <code>@Record</code> and transform the code into this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="err">@</span><span class="nx">Record</span><span class="p">()</span>
+<span class="k">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">init</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">__givenName</span> <span class="o">=</span> <span class="nx">init</span><span class="p">.</span><span class="nx">givenName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">__familyName</span> <span class="o">=</span> <span class="nx">init</span><span class="p">.</span><span class="nx">familyName</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">__givenName</span><span class="p">;</span>
+  <span class="nx">__familyName</span><span class="p">;</span>
+
+  <span class="nx">get</span> <span class="nx">givenName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">__givenName</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">get</span> <span class="nx">familyName</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">__familyName</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Here&rsquo;s what happened:</p>
+
+<ul>
+<li>the fields were renamed to be &lsquo;private&rsquo;</li>
+<li>getters were created to only allow read access</li>
+<li>a constructor was added to initialise the fields</li>
+</ul>
+
+<p>This is how we could use it:</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">dad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span><span class="p">,</span> <span class="nx">familyName</span><span class="o">:</span> <span class="s1">&#39;Simpson&#39;</span> <span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`created dad </span><span class="si">${</span><span class="nx">dad</span><span class="p">.</span><span class="nx">givenName</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">dad</span><span class="p">.</span><span class="nx">familyName</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="c1">// will output &#34;created dad Homer Simpson&#34;
+</span></code></pre></div>
+<p>But it&rsquo;s not terribly useful, yet. How do we change it? By creating a copy! Since this can be quite cumbersome and error-prone for larger objects, we generate a method to help us with that:</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="err">@</span><span class="nx">Record</span><span class="p">()</span>
+<span class="k">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="c1">// ...
+</span><span class="c1"></span>
+  <span class="nx">update</span><span class="p">(</span><span class="nx">update</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span>
+      <span class="nx">givenName</span><span class="o">:</span> <span class="nx">update</span><span class="p">.</span><span class="nx">givenName</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">__givenName</span><span class="p">,</span>
+      <span class="nx">familyName</span><span class="o">:</span> <span class="nx">update</span><span class="p">.</span><span class="nx">familyName</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">__familyName</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>update</code> gets an object and creates a new <code>Person</code> by using the provided data or falls back to the existing data, if none is provided.</p>
+
+<p>Now we can easily create a copy of our record:</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">son</span> <span class="o">=</span> <span class="nx">dad</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Bart&#39;</span> <span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`created son </span><span class="si">${</span><span class="nx">son</span><span class="p">.</span><span class="nx">givenName</span><span class="si">}</span><span class="sb"> </span><span class="si">${</span><span class="nx">son</span><span class="p">.</span><span class="nx">familyName</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="c1">// will output &#34;created son Bart Simpson&#34;
+</span></code></pre></div>
+<p>The next step is to make it type safe. Basically, our original code simply receives type annotations for its fields. That&rsquo;s it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="err">@</span><span class="nx">Record</span><span class="p">()</span>
+<span class="k">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">givenName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="nx">familyName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The plugin now mostly just copies the new type annotations to the right places but also creates two new types:</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="err">@</span><span class="nx">Record</span><span class="p">()</span>
+<span class="k">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">init</span><span class="o">:</span> <span class="nx">PersonInit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">__givenName</span> <span class="o">=</span> <span class="nx">init</span><span class="p">.</span><span class="nx">givenName</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">__familyName</span> <span class="o">=</span> <span class="nx">init</span><span class="p">.</span><span class="nx">familyName</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">__givenName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="nx">__familyName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+
+  <span class="nx">get</span> <span class="nx">givenName</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">__givenName</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">get</span> <span class="nx">familyName</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">__familyName</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">update</span><span class="p">(</span><span class="nx">update</span><span class="o">:</span> <span class="nx">PersonUpdate</span><span class="p">)</span><span class="o">:</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span>
+      <span class="nx">givenName</span><span class="o">:</span> <span class="nx">update</span><span class="p">.</span><span class="nx">givenName</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">__givenName</span><span class="p">,</span>
+      <span class="nx">familyName</span><span class="o">:</span> <span class="nx">update</span><span class="p">.</span><span class="nx">familyName</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">__familyName</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">PersonInit</span> <span class="o">=</span> <span class="p">{</span> 
+  <span class="nx">givenName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="nx">familyName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">type</span> <span class="nx">PersonUpdate</span> <span class="o">=</span> <span class="p">{</span> 
+  <span class="nx">givenName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="nx">familyName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>The first one, <code>PersonInit</code>, defines the type of the object used to initialise the record. The second one, <code>PersonUpdate</code>, defines the type of the object used to create a copy of the record. It is important to notice that it contains optional properties (marked by <code>?</code> at the end). This means that the client doesn&rsquo;t have to specify any of them.</p>
+
+<p><strong>We now a have a type safe, immutable record.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span><span class="p">,</span> <span class="nx">familyName</span><span class="o">:</span> <span class="s1">&#39;Simpson&#39;</span> <span class="p">});</span>
+<span class="c1">// OK
+</span><span class="c1"></span>
+<span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span> <span class="p">});</span>
+<span class="c1">// type error: property `familyName` not found
+</span><span class="c1"></span>
+<span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span><span class="p">,</span> <span class="nx">familyName</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="c1">// type error: boolean is incompatible with string
+</span><span class="c1"></span>
+<span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="nx">givenName</span><span class="o">:</span> <span class="s1">&#39;Homer&#39;</span><span class="p">,</span> <span class="nx">familyName</span><span class="o">:</span> <span class="s1">&#39;Simpson&#39;</span> <span class="p">}).</span><span class="nx">update</span><span class="p">({});</span>
+<span class="c1">// OK
+</span></code></pre></div>
+<p>Unfortunately, the type checker does <em>not</em> fail when providing unknown properties during initialisation or update. This means we could easily have a typo for an optional field and wonder why nothing happens.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">daughter</span> <span class="o">=</span> <span class="nx">dad</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">givnam</span><span class="o">:</span> <span class="s1">&#39;Lisa&#39;</span><span class="p">};</span>
+<span class="c1">// OK
+</span></code></pre></div>
+<p>Apparently, this is a known limitation in Flow. The <a href="https://github.com/facebook/flow/issues/1164">workaround</a> is to <em>seal</em> the object type by adding a &lsquo;catch-all property&rsquo; with a <code>void</code> type.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">type</span> <span class="nx">PersonInit</span> <span class="o">=</span> <span class="p">{</span> 
+  <span class="nx">givenName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="nx">familyName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="p">[</span><span class="nx">key</span><span class="o">:</span> <span class="nx">string</span><span class="p">]</span><span class="o">:</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">type</span> <span class="nx">PersonUpdate</span> <span class="o">=</span> <span class="p">{</span> 
+  <span class="nx">givenName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="nx">familyName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
+  <span class="p">[</span><span class="nx">key</span><span class="o">:</span> <span class="nx">string</span><span class="p">]</span><span class="o">:</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Now when we use an invalid property key, it fails.</p>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">daughter</span> <span class="o">=</span> <span class="nx">dad</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">givnam</span><span class="o">:</span> <span class="s1">&#39;Lisa&#39;</span><span class="p">};</span>
+<span class="c1">// type error: string is incompatible with undefined
+</span></code></pre></div>
+<p>This admittedly slightly cryptic error message now tells us that <code>givnam</code> is not part of the update data type.</p>
+
+<p><em>By the way, to make this type check in Flow the configuration file <code>.flowconfig</code> needs the flag <code>unsafe.enable_getters_and_setters=true</code> to process the getters.</em></p>
+
+<hr />
+
+<p>The source code for this code generator can be found on <a href="https://github.com/stephanos/babel-plugin-immutable-record">GitHub</a></p>
+
+
+		<style>
+  footer {
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .post-footer {
+    position: relative;
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: #EBF2F6 1px solid;
+  }
+
+  .author-image {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 44%;
+    margin: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    overflow: hidden;
+    padding: 6px;
+    background: #fff;
+    z-index: 2;
+    box-shadow: #E7EEF2 0 0 0 1px;
+  }
+
+  .author-image .img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
+  .post-footer h4 {
+    font-size: 1rem;
+  }
+
+  .post-footer p {
+    margin: 1rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .separator {
+    border-top: 0.5px solid #e5e5e5;
+    padding-top: 4rem;
+  }
+</style>
+
+<footer class="post-footer">
+
+  <figure class="author-image">
+    <a class="img" href="#" style="background-image: url(/images/2014/Aug/IMG_6131a-copy.jpg)"></a>
+  </figure>
+
+  <section class="author">
+    <h4>Stephan Behnke</h4>
+    <p>
+      Software developer by trade. Most of the time on the ever lasting quest for simplicity, elegance and beauty in code.
+      Or just getting stuff done in-between.
+    </p>
+  </section>
+
+</footer>
+
+<div class="separator"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "stephanos" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	</div>
+
+	<div class="pagination">
+		<a href="/zero-to-om-6/" class="left arrow">&#8592;</a>
+		<a href="/the-curious-case-of-the-merciless-compiler/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-02-23 14:20:18.294467 -0800 PST m=&#43;0.223671586">2019</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

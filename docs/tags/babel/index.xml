@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Babel on This Programming Life</title>
+    <link>https://blog.stephanbehnke.com/tags/babel/</link>
+    <description>Recent content in Babel on This Programming Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 06 Mar 2016 15:29:39 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.stephanbehnke.com/tags/babel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The hunt for an immutable, type safe data record in JavaScript</title>
+      <link>https://blog.stephanbehnke.com/hunt-for-immutable-type-safe-record-in-javascript/</link>
+      <pubDate>Sun, 06 Mar 2016 15:29:39 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/hunt-for-immutable-type-safe-record-in-javascript/</guid>
+      <description>Ever since working with Scala&amp;rsquo;s case classes I was hooked on the idea of having a type safe data record that was also immutable. What&amp;rsquo;s not to like? It&amp;rsquo;s type safe and immutable (duh). So I wanted to see if I can get the same thing in JavaScript - the most mutable and dynamic language known to man.
+class Person { givenName; familyName; }  This will serve as our starting point: a simple class in JavaScript.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cljsbuild on This Programming Life</title>
+    <link>https://blog.stephanbehnke.com/tags/cljsbuild/</link>
+    <description>Recent content in Cljsbuild on This Programming Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Sep 2014 12:51:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.stephanbehnke.com/tags/cljsbuild/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zero to Om - Act 5</title>
+      <link>https://blog.stephanbehnke.com/zero-to-om-act-5/</link>
+      <pubDate>Thu, 25 Sep 2014 12:51:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/zero-to-om-act-5/</guid>
+      <description>In this part we will have a closer look at the app&amp;rsquo;s build configuration and discover what it can do for us. The source code can be found on GitHub.
+Note: I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
+ The Build Config The project&amp;rsquo;s build configuration is defined in project.clj. It is written in Clojure and looks like this:
+;; project.clj, part 1 (defproject todomvc &amp;#34;0.</description>
+    </item>
+    
+  </channel>
+</rss>

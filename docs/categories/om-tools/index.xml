@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Om Tools on This Programming Life</title>
+    <link>https://blog.stephanbehnke.com/categories/om-tools/</link>
+    <description>Recent content in Om Tools on This Programming Life</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Nov 2014 18:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.stephanbehnke.com/categories/om-tools/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zero to Om - Act 6</title>
+      <link>https://blog.stephanbehnke.com/zero-to-om-6/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/zero-to-om-6/</guid>
+      <description>Welcome to our next act. Today we&amp;rsquo;re going to meet a few additional libraries that&amp;rsquo;ll help us write great Om applications. Let&amp;rsquo;s get started!
+As always, I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
+ sablono In a previous post I showed you how the application&amp;rsquo;s UI is rendered:
+(dom/div nil (header) (dom/input #js {:id &amp;#34;new-todo&amp;#34; :ref &amp;#34;newField&amp;#34; :placeholder &amp;#34;What needs to be done?</description>
+    </item>
+    
+  </channel>
+</rss>
