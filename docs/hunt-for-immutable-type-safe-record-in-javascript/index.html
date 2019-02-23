@@ -220,12 +220,12 @@
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nx">type</span> <span class="nx">PersonInit</span> <span class="o">=</span> <span class="p">{</span> 
+<span class="nx">type</span> <span class="nx">PersonInit</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">givenName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
   <span class="nx">familyName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="nx">type</span> <span class="nx">PersonUpdate</span> <span class="o">=</span> <span class="p">{</span> 
+<span class="nx">type</span> <span class="nx">PersonUpdate</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">givenName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
   <span class="nx">familyName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
 <span class="p">};</span>
@@ -250,13 +250,13 @@
 <span class="c1">// OK
 </span></code></pre></div>
 <p>Apparently, this is a known limitation in Flow. The <a href="https://github.com/facebook/flow/issues/1164">workaround</a> is to <em>seal</em> the object type by adding a &lsquo;catch-all property&rsquo; with a <code>void</code> type.</p>
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">type</span> <span class="nx">PersonInit</span> <span class="o">=</span> <span class="p">{</span> 
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">type</span> <span class="nx">PersonInit</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">givenName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
   <span class="nx">familyName</span><span class="o">:</span> <span class="nx">string</span><span class="p">;</span>
   <span class="p">[</span><span class="nx">key</span><span class="o">:</span> <span class="nx">string</span><span class="p">]</span><span class="o">:</span> <span class="k">void</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="nx">type</span> <span class="nx">PersonUpdate</span> <span class="o">=</span> <span class="p">{</span> 
+<span class="nx">type</span> <span class="nx">PersonUpdate</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">givenName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
   <span class="nx">familyName</span><span class="o">?:</span> <span class="nx">string</span><span class="p">;</span>
   <span class="p">[</span><span class="nx">key</span><span class="o">:</span> <span class="nx">string</span><span class="p">]</span><span class="o">:</span> <span class="k">void</span><span class="p">;</span>
@@ -354,7 +354,7 @@
 <div id="disqus_thread"></div>
 <script type="application/javascript">
     var disqus_config = function () {
-    
+    this.page.identifier = '14';
     
     
     };
@@ -385,7 +385,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-02-23 14:30:39.731337 -0800 PST m=&#43;0.373251331">2019</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-02-23 14:40:31.644376 -0800 PST m=&#43;0.207301915">2019</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
