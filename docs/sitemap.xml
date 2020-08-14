@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
@@ -63,17 +63,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/app-engine/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.stephanbehnke.com/tags/app-engine/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/cloud/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/app-engine/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
@@ -83,7 +78,7 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/datastore/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/cloud/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
@@ -93,7 +88,7 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/google/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/datastore/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
@@ -103,7 +98,7 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/hosting/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/google/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
@@ -113,12 +108,17 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/java/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/hosting/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.stephanbehnke.com/tags/java/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/java/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
@@ -138,12 +138,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/babel/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/babel/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/babel/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/babel/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
@@ -158,12 +158,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/javascript/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/javascript/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/javascript/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/javascript/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
@@ -193,12 +193,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/om-tools/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/om-tools/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/om-tools/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/om-tools/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
@@ -223,17 +223,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/schema/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.stephanbehnke.com/tags/schema/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/secretary/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/schema/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
@@ -243,7 +238,7 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/todomvc/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/secretary/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
@@ -253,17 +248,22 @@
   </url>
   
   <url>
+    <loc>https://blog.stephanbehnke.com/categories/todomvc/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.stephanbehnke.com/zero-to-om-6/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/cljsbuild/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/cljsbuild/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/cljsbuild/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/cljsbuild/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
@@ -278,12 +278,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/leiningen/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/leiningen/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/leiningen/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/leiningen/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
@@ -358,12 +358,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/scala/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/scala/</loc>
     <lastmod>2013-01-28T11:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/scala/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/scala/</loc>
     <lastmod>2013-01-28T11:00:00+00:00</lastmod>
   </url>
   

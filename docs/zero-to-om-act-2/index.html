@@ -71,83 +71,62 @@
 </style>
 
 
-		
-
-<p>In this second post we will look at actual ClojureScript source code, step by step. The source code can be found on <a href="https://github.com/stephanos/om-tutorial">GitHub</a>.</p>
-
+		<p>In this second post we will look at actual ClojureScript source code, step by step. The source code can be found on <a href="https://github.com/stephanos/om-tutorial">GitHub</a>.</p>
 <p><strong>Note:</strong> I strongly recommend reading the <a href="/zero-to-om/">previous post</a> first if you haven&rsquo;t done so already.</p>
-
-<hr/>
-
+<!-- raw HTML omitted -->
 <h2 id="clojurescript-101">ClojureScript 101</h2>
-
 <p>Before we dive in we&rsquo;ll look at the philosophy of ClojureScript.</p>
-
 <p>Since ClojureScript is a Lisp dialect, it strips away most of the syntax you may know from other programming languages. This makes it very simple - but it looks pretty unfamiliar at first.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(+ 1 1)</code></pre></div>
-<p>This expression (also called S-expression, short for <em>symbolic expression</em>) has the value <code>2</code>. Every expression has a value. The parentheses define its scope. Basically, <strong>everything</strong> in ClojureScript boils down to this simple form:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(function param1 param2 ... paramN)</code></pre></div>
-<p>The first element in the expression is the function position, the others are its parameters. This is called <em>prefix notation</em>, in contrast to the <em>algebraic notation</em> <code>1 + 1</code> from C-like languages.</p>
-
+<pre><code class="language-language-clojure" data-lang="language-clojure">(+ 1 1)
+</code></pre><p>This expression (also called S-expression, short for <em>symbolic expression</em>) has the value <code>2</code>. Every expression has a value. The parentheses define its scope. Basically, <strong>everything</strong> in ClojureScript boils down to this simple form:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">(function param1 param2 ... paramN)
+</code></pre><p>The first element in the expression is the function position, the others are its parameters. This is called <em>prefix notation</em>, in contrast to the <em>algebraic notation</em> <code>1 + 1</code> from C-like languages.</p>
 <p>Of course, expressions can be nested, too:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(println (- 10 (* 2 5)))</code></pre></div>
-<p>This expression will print <code>0</code> since expressions are evaluated from the inside out. But interestingly, it&rsquo;s value is <code>nil</code> since <code>println</code> only has a side-effect and returns no meaningful value.</p>
-
+<pre><code class="language-language-clojure" data-lang="language-clojure">(println (- 10 (* 2 5)))
+</code></pre><p>This expression will print <code>0</code> since expressions are evaluated from the inside out. But interestingly, it&rsquo;s value is <code>nil</code> since <code>println</code> only has a side-effect and returns no meaningful value.</p>
 <p>Note that <code>+</code> and <code>println</code> are actually just symbols that evaluate to values, in this case functions. They are similar to constants in this regard.</p>
-
 <p>There are three types of values that can be in the function position:</p>
-
 <ul>
 <li>a function, like <code>println</code> or <code>+</code></li>
 <li>a special form, build-in &ldquo;primitives&rdquo; like <code>if</code>, <code>fn</code> and <code>def</code></li>
 <li>a macro, functions running at <em>compile-time</em></li>
 </ul>
-
 <p>One more thing about macros: they are a very powerful way to extend the language and transform your code. For example, all parameters of a function must be evaluated before it can be executed - but in the case of <code>(and (fn ...) (fn ...))</code> we don&rsquo;t want to evaluate the second parameter if the first one is already false! Good thing <code>and</code> is a macro: it transforms the code in a way that each parameter is executed lazily and the function returns as early as possible.</p>
-
 <p>But enough about macros. We will now continue by going through the todo application&rsquo;s source code.</p>
-
 <h2 id="first-steps">First Steps</h2>
-
 <p>Our application consists of three ClojureScript source files: <code>app.cljs</code>, <code>item.cljs</code> and <code>utils.cljs</code>. Let&rsquo;s start easy. In order to get a feeling for ClojureScript we&rsquo;ll look at the smallest file first: <code>utils.cljs</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #1
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #1
 (ns todomvc.utils
   (:require [cljs.reader :as reader])
-  (:import [goog.ui IdGenerator]))</code></pre></div>
-<p>In the first line, a namespace for the file is specified via <code>ns</code>. Every ClojureScript file needs to define a unique namespace, <code>todomvc.utils</code> in this case. This prevents name collisions and integrates nicely with the module concept of Google Closure. Note: It&rsquo;s not a coincidence that the namespace matches the file path (<code>todomvc/utils</code>) - it&rsquo;s a must.</p>
-
+  (:import [goog.ui IdGenerator]))
+</code></pre><p>In the first line, a namespace for the file is specified via <code>ns</code>. Every ClojureScript file needs to define a unique namespace, <code>todomvc.utils</code> in this case. This prevents name collisions and integrates nicely with the module concept of Google Closure. Note: It&rsquo;s not a coincidence that the namespace matches the file path (<code>todomvc/utils</code>) - it&rsquo;s a must.</p>
 <p>In the second line, the external ClojureScript namespace <code>cljs.reader</code> is loaded with <code>:require</code>. It is named <code>reader</code> via the required <code>:as</code> and can be referred to by this alias throughout the file.</p>
-
 <p>In the third line, <code>:import</code> loads the module <code>IdGenerator</code> from the namespace <code>goog.ui</code> of the Google Closure library. The difference to <code>:require</code> is that we load specific elements, not namespaces, in order to refer to them by name.</p>
-
 <p><strong>Note</strong>: Words starting with <code>:</code> are keywords. They are like symbols - but just evaluate to themselves instead of an arbitrary value.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #2
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #2
 (defn pluralize [n word]
   (if (== n 1)
-    word				;; &#39;true&#39;-block
-    (str word &#34;s&#34;)))	;; &#39;false&#39;-block</code></pre></div>
-<p><code>defn</code> defines a function called <code>pluralize</code> with two parameters: <code>n</code> and <code>word</code>. In the body, <code>if</code> returns the original word when <code>n</code> equals 1 - otherwise a new string with the character &rsquo;s&rsquo; appended to <code>word</code>.</p>
-
+    word				;; 'true'-block
+    (str word &quot;s&quot;)))	;; 'false'-block
+</code></pre><p><code>defn</code> defines a function called <code>pluralize</code> with two parameters: <code>n</code> and <code>word</code>. In the body, <code>if</code> returns the original word when <code>n</code> equals 1 - otherwise a new string with the character &rsquo;s&rsquo; appended to <code>word</code>.</p>
 <p><strong>Note</strong>: <code>defn</code> is just a shortcut to define an anonymous function with <code>fn</code> and binding it to a symbol with <code>def</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #3
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #3
 (defn now []
-  (js/Date.))</code></pre></div>
-<p><code>now</code> is a function without any parameters. It returns a new instance of JavaScript&rsquo;s <code>Date</code> object. Since it is a native JavaScript object the prefix <code>js/</code> must be used to access the <code>js</code> namespace.</p>
-
+  (js/Date.))
+</code></pre><p><code>now</code> is a function without any parameters. It returns a new instance of JavaScript&rsquo;s <code>Date</code> object. Since it is a native JavaScript object the prefix <code>js/</code> must be used to access the <code>js</code> namespace.</p>
 <p><strong>Note</strong>: The inconspicuous <code>.</code> is responsible for calling the object&rsquo;s constructor, like <code>new</code> in JavaScript.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #4
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #4
 (defn guid []
-  (.getNextUniqueId (.getInstance IdGenerator)))</code></pre></div>
-<p><code>guid</code> uses the Closure library&rsquo;s <code>IdGenerator</code> to return a new unique ID. It also shows how to call a method on a JavaScript object: <code>(.methodName jsObject)</code>, notice the <code>.</code> at the beginning. The expression translates to <code>IdGenerator.getInstance().getNextUniqueId()</code> in JavaScript.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #5
+  (.getNextUniqueId (.getInstance IdGenerator)))
+</code></pre><p><code>guid</code> uses the Closure library&rsquo;s <code>IdGenerator</code> to return a new unique ID. It also shows how to call a method on a JavaScript object: <code>(.methodName jsObject)</code>, notice the <code>.</code> at the beginning. The expression translates to <code>IdGenerator.getInstance().getNextUniqueId()</code> in JavaScript.</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #5
 (defn hidden [is-hidden]
   (if is-hidden
-    #js {:display &#34;none&#34;}
-    #js {}))</code></pre></div>
-<p><code>hidden</code> returns the JavaScript object <code>{display: &quot;none&quot;}</code> when the parameter <code>is-hidden</code> is true. As you see, to return a native JavaScript object use <code>#js {...}</code> the elements are defined in key/value pairs without any special characters like <code>:</code>.</p>
-
+    #js {:display &quot;none&quot;}
+    #js {}))
+</code></pre><p><code>hidden</code> returns the JavaScript object <code>{display: &quot;none&quot;}</code> when the parameter <code>is-hidden</code> is true. As you see, to return a native JavaScript object use <code>#js {...}</code> the elements are defined in key/value pairs without any special characters like <code>:</code>.</p>
 <p><strong>Note</strong>: In ClojureScript neither <em>camelCase</em> nor <em>snake_case</em> are used, but <em>dash-separated-lowercase</em>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #6
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; utils.cljs, part #6
 (defn store
   ([ns] (store ns nil))	;; 1 parameter
   ([ns edn]				;; 2 parameters
@@ -156,21 +135,14 @@
       (let [s (.getItem js/localStorage ns)]
         (if-not (nil? s)
           (reader/read-string s)
-          [])))))</code></pre></div>
-<p><code>store</code> reads data from and writes data to the browser&rsquo;s local storage. It contains a lot of interesting new things.</p>
-
+          [])))))
+</code></pre><p><code>store</code> reads data from and writes data to the browser&rsquo;s local storage. It contains a lot of interesting new things.</p>
 <p>First, it&rsquo;s a multi-arity function. This means it allows multiple numbers of arguments, <code>[ns]</code> and <code>[ns edn]</code> in this case. It&rsquo;s similar to function overloading in other languages. The common use case is to provide default values for parameters. Here it uses <code>nil</code> for the second parameter if not specified otherwise.</p>
-
 <p>Secondly, we see a few new functions. <code>if-not</code> is obviously the negated version of <code>if</code>. <code>nil?</code> (it&rsquo;s best practice to have the &lsquo;?&rsquo; suffix at the end of functions with a boolean return type) checks if the provided value equals <code>nil</code> (which is identical to <code>null</code> in JavaScript). <code>let</code> allows binding symbols to values locally, sort of like a confined <code>def</code>: It starts with a vector of bindings, pairs of symbol/value, and concludes with a body of expressions. Here it binds <code>s</code> to the result of the local storage access.</p>
-
 <p>Thirdly, it serializes and deserializes ClojureScript data structures: The textual result of <code>(str edn)</code> is written to the local storage with <code>.setItem</code> and reads from local storage with <code>.getItem</code> - deserialized with <code>(reader/read-string s)</code> from the <code>reader</code> namespace loaded earlier.</p>
-
 <p><strong>Note:</strong> <a href="https://github.com/edn-format/edn">EDN</a> (<em>extensible data notation</em>) is like an extended version of JSON with a few additional benefits like non-string map keys, sets and tags.</p>
-
-<hr/>
-
+<!-- raw HTML omitted -->
 <p>That&rsquo;s it for now. In <a href="/zero-to-om-act-3"><strong>Act 3</strong></a> we&rsquo;ll look at the Om-specific code in detail.</p>
-
 <p>In the meantime, if you want to learn more about ClojureScript I wholeheartedly recommend the <a href="https://github.com/swannodette/lt-cljs-tutorial">tutorial for Light Table</a> from David Nolen, the creator of Om.</p>
 
 
@@ -284,7 +256,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.498703 -0700 PDT m=&#43;0.307507069">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.385889 -0700 PDT m=&#43;0.118673958">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

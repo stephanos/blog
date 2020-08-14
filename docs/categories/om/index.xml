@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>om on This Programming Life</title>
@@ -19,8 +19,8 @@
       <guid>https://blog.stephanbehnke.com/zero-to-om-6/</guid>
       <description>Welcome to our next act. Today we&amp;rsquo;re going to meet a few additional libraries that&amp;rsquo;ll help us write great Om applications. Let&amp;rsquo;s get started!
 As always, I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
- sablono In a previous post I showed you how the application&amp;rsquo;s UI is rendered:
-(dom/div nil (header) (dom/input #js {:id &amp;#34;new-todo&amp;#34; :ref &amp;#34;newField&amp;#34; :placeholder &amp;#34;What needs to be done?</description>
+sablono In a previous post I showed you how the application&amp;rsquo;s UI is rendered:
+(dom/div nil (header) (dom/input #js {:id &amp;quot;new-todo&amp;quot; :ref &amp;quot;newField&amp;quot; :placeholder &amp;quot;What needs to be done?&amp;quot; :onKeyDown #(enter-new-todo % state owner)}) (listing state) (footer state))))) As you can see, a dom/* HTML element receives a map of properties: #js {.</description>
     </item>
     
     <item>
@@ -31,8 +31,8 @@ As always, I strongly recommend reading the previous post first if you haven&amp
       <guid>https://blog.stephanbehnke.com/zero-to-om-act-5/</guid>
       <description>In this part we will have a closer look at the app&amp;rsquo;s build configuration and discover what it can do for us. The source code can be found on GitHub.
 Note: I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
- The Build Config The project&amp;rsquo;s build configuration is defined in project.clj. It is written in Clojure and looks like this:
-;; project.clj, part 1 (defproject todomvc &amp;#34;0.</description>
+The Build Config The project&amp;rsquo;s build configuration is defined in project.clj. It is written in Clojure and looks like this:
+;; project.clj, part 1 (defproject todomvc &amp;quot;0.</description>
     </item>
     
     <item>
@@ -43,7 +43,7 @@ Note: I strongly recommend reading the previous post first if you haven&amp;rsqu
       <guid>https://blog.stephanbehnke.com/zero-to-om-act-4/</guid>
       <description>Until now the application is rather boring. It just displays data. But we want to actually use it! In this post we will take a look at how the app reacts (no pun intented) to user input. The source code can be found on GitHub.
 Note: I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
- Managing state is tricky. Each framework has its own mechanisms to detect and handle state changes.</description>
+Managing state is tricky. Each framework has its own mechanisms to detect and handle state changes.</description>
     </item>
     
     <item>
@@ -55,7 +55,7 @@ Note: I strongly recommend reading the previous post first if you haven&amp;rsqu
       <description>In this third post we&amp;rsquo;ll take a look at how the app is initialized and rendered. The source code can be found on GitHub.
 Note: I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
 For increased comprehension we will jump through the two files and not go through them from top to bottom.
- The State Most applications, at least the interesting ones, have some kind of state.</description>
+The State Most applications, at least the interesting ones, have some kind of state.</description>
     </item>
     
     <item>
@@ -66,7 +66,7 @@ For increased comprehension we will jump through the two files and not go throug
       <guid>https://blog.stephanbehnke.com/zero-to-om-act-2/</guid>
       <description>In this second post we will look at actual ClojureScript source code, step by step. The source code can be found on GitHub.
 Note: I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
- ClojureScript 101 Before we dive in we&amp;rsquo;ll look at the philosophy of ClojureScript.
+ClojureScript 101 Before we dive in we&amp;rsquo;ll look at the philosophy of ClojureScript.
 Since ClojureScript is a Lisp dialect, it strips away most of the syntax you may know from other programming languages.</description>
     </item>
     

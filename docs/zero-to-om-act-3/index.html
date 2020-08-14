@@ -71,154 +71,114 @@
 </style>
 
 
-		
-
-<p>In this third post we&rsquo;ll take a look at how the app is initialized and rendered. The source code can be found on <a href="https://github.com/stephanos/om-tutorial">GitHub</a>.</p>
-
+		<p>In this third post we&rsquo;ll take a look at how the app is initialized and rendered. The source code can be found on <a href="https://github.com/stephanos/om-tutorial">GitHub</a>.</p>
 <p><strong>Note:</strong> I strongly recommend reading the <a href="/zero-to-om-act-2/">previous post</a> first if you haven&rsquo;t done so already.</p>
-
 <p>For increased comprehension we will jump through the two files and not go through them from top to bottom.</p>
-
-<hr/>
-
+<!-- raw HTML omitted -->
 <h2 id="the-state">The State</h2>
-
 <p>Most applications, at least the interesting ones, have some kind of state. In our case we are storing two data points:</p>
-
 <ul>
 <li>a collection of todos</li>
 <li>a view filter (i.e. &ldquo;All&rdquo;, &ldquo;Active&rdquo; or &ldquo;Completed&rdquo;)</li>
 </ul>
-
 <p>The exciting thing about Om is that we put all of the state into exactly one place:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(def app-state (atom {:showing :all :todos []}))</code></pre></div>
-<p>The symbol <code>app-state</code> binds to an <code>atom</code> of a map: the view filter (<code>showing</code>) is set to &lsquo;all&rsquo; and the <code>todos</code> are an empty collection.</p>
-
+<pre><code class="language-language-clojure" data-lang="language-clojure">(def app-state (atom {:showing :all :todos []}))
+</code></pre><p>The symbol <code>app-state</code> binds to an <code>atom</code> of a map: the view filter (<code>showing</code>) is set to &lsquo;all&rsquo; and the <code>todos</code> are an empty collection.</p>
 <p>As you see, a map can be defined by curly brackets: <code>{key1 val1 ... keyN valN}</code> (<em>good to know:</em> an uneven number of elements results in a compiler error). Optionally, you could just set a <code>,</code> between pairs since a comma is treated as whitespace in Clojurescript.</p>
-
 <p>An <code>atom</code> is a so-called <em>reference value</em>, meaning that it basically points to immutable data. Why couldn&rsquo;t we just use a simple symbol and make it point to new data after a change? Well, an <code>atom</code> has the ability to register watchers when you change its value with <code>swap!</code> (or <code>reset!</code>). Om leverages this to re-render components on a change of state.</p>
-
 <p>By pushing all of the application state to the edges of the system, the rest of the code remains functional since there is only a single mutable object now. Putting the state in one specific place reduces complexity and is therefore much easier to reason about.</p>
-
 <h2 id="the-root">The Root</h2>
-
 <p>Now we&rsquo;ll meet Om for the first time! Finally, huh? So first we need to load it:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
+<pre><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [...])</code></pre></div>
-<p>Macros - since they are a special kind of function - cannot be loaded with the standard <code>require</code> but through <code>require-macros</code>. However, if macros are in the same namespace - as in this case - adding <code>:include-macros true</code> has the same effect.</p>
-
+            [...])
+</code></pre><p>Macros - since they are a special kind of function - cannot be loaded with the standard <code>require</code> but through <code>require-macros</code>. However, if macros are in the same namespace - as in this case - adding <code>:include-macros true</code> has the same effect.</p>
 <p>To start the app we need to use the function <code>om/root</code> and tell it</p>
-
 <ul>
 <li>(a) what to render,</li>
 <li>(b) what our state is,</li>
-
-<li><p>&copy; and where to hook into the DOM.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(om/root 
-todo-app                                           ;; (a)
-app-state                                          ;; (b)
-{:target (.getElementById js/document &#34;todoapp&#34;)}) ;; (c)</code></pre></div></li>
+<li>(c) and where to hook into the DOM.</li>
 </ul>
-
-<p>Om will take it from here. It starts a rendering loop and when the state changes it will update the components in a single batch (<em>very</em> efficiently by leveraging the browser&rsquo;s <a href="http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame</a>).</p>
-
+<pre><code class="language-language-clojure" data-lang="language-clojure">(om/root 
+  todo-app                                           ;; (a)
+  app-state                                          ;; (b)
+  {:target (.getElementById js/document &quot;todoapp&quot;)}) ;; (c)
+</code></pre><p>Om will take it from here. It starts a rendering loop and when the state changes it will update the components in a single batch (<em>very</em> efficiently by leveraging the browser&rsquo;s <a href="http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame</a>).</p>
 <p>Now to the burning question: What is <code>todo-app</code> ?</p>
-
 <h2 id="component-todo-app">Component &lsquo;todo-app&rsquo;</h2>
-
 <p><code>todo-app</code> is a function that takes two parameters: the state and the underlying React component <code>owner</code> (which Om creates for you).</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn todo-app [{:keys [todos] :as state} owner]
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defn todo-app [{:keys [todos] :as state} owner]
   ;; ...
-)</code></pre></div>
-<p>You might be wondering why the first parameter looks so odd. This is a powerful feature of ClojureScript at work: <strong>destructuring</strong>. It basically lets you bind symbols to parts of a data structure. In this case <code>[:keys [todos]]</code> is a shortcut for <code>[todos :todos]</code> - both bind the value of the key <code>todos</code> from the state to the symbol <code>todos</code>. The <code>:as</code> is optional and allows to define an alias for the entire structure, <code>state</code> in this case. If you want to learn more about this, I recommend reading <a href="http://blog.jayfields.com/2010/07/clojure-destructuring.html">Clojure: Destructuring</a>.</p>
-
+)
+</code></pre><p>You might be wondering why the first parameter looks so odd. This is a powerful feature of ClojureScript at work: <strong>destructuring</strong>. It basically lets you bind symbols to parts of a data structure. In this case <code>[:keys [todos]]</code> is a shortcut for <code>[todos :todos]</code> - both bind the value of the key <code>todos</code> from the state to the symbol <code>todos</code>. The <code>:as</code> is optional and allows to define an alias for the entire structure, <code>state</code> in this case. If you want to learn more about this, I recommend reading <a href="http://blog.jayfields.com/2010/07/clojure-destructuring.html">Clojure: Destructuring</a>.</p>
 <p>Let&rsquo;s have a look at the function&rsquo;s body:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn todo-app [{:keys [todos] :as state} owner]
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defn todo-app [{:keys [todos] :as state} owner]
   (reify
     om/IRender
     (render [_]
       ;; create DOM elements ...
-    )</code></pre></div>
-<p>The first thing you&rsquo;ll notice is <code>reify</code>. It evaluates to a new object that implements all specified protocols. A protocol is &ldquo;a named set of named methods and their signatures&rdquo;.</p>
-
+    )
+</code></pre><p>The first thing you&rsquo;ll notice is <code>reify</code>. It evaluates to a new object that implements all specified protocols. A protocol is &ldquo;a named set of named methods and their signatures&rdquo;.</p>
 <p>Here the <code>om/IRender</code> protocol is implemented. It has a <code>render</code> function which - obviously - renders the component to HTML. It is called by Om whenever it detects a change in the component&rsquo;s state. <strong>Note:</strong> The first parameter is the instance of the component itself, it is ignored with <code>_</code> since it is not needed.</p>
-
 <p>There are several protocols in Om that map more or less directly to React&rsquo;s life cycle steps:</p>
-
-<p><img src="/images/2014/Aug/lifecycle-001-3.png" alt="" /></p>
-
+<p><img src="/images/2014/Aug/lifecycle-001-3.png" alt=""></p>
 <p>Basically there is:</p>
-
 <ul>
 <li>a creation phase (&ldquo;birth&rdquo;) which can be used to do initialization work,</li>
 <li>an updating phase to react to state changes &amp; render the component,</li>
 <li>and a cleanup phase (&ldquo;death&rdquo;).</li>
 </ul>
-
 <p>The only protocol you should never ever try to implement is <code>IShouldUpdate</code> since this is where Om really shines: it runs a comparison between old and new state in order to decide whether to re-render the component or not. And since the data structures in ClojureScript are immutable it only requires a simple equality check - which is insanely fast compared to React&rsquo;s expensive piece by piece comparision. This is the main reason why Om currently crushes pure React.js applications in benchmarks.</p>
-
 <p>Let&rsquo;s get back to the <code>render</code> function from above:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(dom/div nil
+<pre><code class="language-language-clojure" data-lang="language-clojure">(dom/div nil
   (header)
   (dom/input 
-    #js {:id &#34;new-todo&#34; :ref &#34;newField&#34;
-         :placeholder &#34;What needs to be done?&#34;
+    #js {:id &quot;new-todo&quot; :ref &quot;newField&quot;
+         :placeholder &quot;What needs to be done?&quot;
          :onKeyDown #(enter-new-todo % state owner)})
   (listing state)
-  (footer state)))))</code></pre></div>
-<p>It creates the actual DOM elemens with the help of Om&rsquo;s <code>om.dom</code> namespace imported earlier. These DOM functions map directly to React&rsquo;s DOM API, meaning that <code>dom/div</code> becomes <code>React.DOM.div</code> and has the same parameters:</p>
-
+  (footer state)))))
+</code></pre><p>It creates the actual DOM elemens with the help of Om&rsquo;s <code>om.dom</code> namespace imported earlier. These DOM functions map directly to React&rsquo;s DOM API, meaning that <code>dom/div</code> becomes <code>React.DOM.div</code> and has the same parameters:</p>
 <ul>
 <li><code>props</code>, a JavaScript object that modifies the component&rsquo;s output/behaviour</li>
 <li>all other (optional) parameters are children components</li>
 </ul>
-
-<p><img src="/images/2014/Aug/todomvc2-1.png" alt="" /></p>
-
+<p><img src="/images/2014/Aug/todomvc2-1.png" alt=""></p>
 <p>In this case, the root element has four children: an input field as well as a header, a list and a footer - just three functions. As you can see, <code>nil</code> is used if there are no props.</p>
-
 <p>Let&rsquo;s have a closer look at the text input:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(dom/input                      
-  #js {:id &#34;new-todo&#34;
-	   :placeholder &#34;What needs to be done?&#34;    
-       :onKeyDown #(enter-new-todo % state owner)})</code></pre></div>
-<p>As we have seen before, <code>props</code> sets an <code>id</code> and <code>placeholder</code> value which will be rendered as HTML tag attributes. <code>onKeyDown</code> registers an event handler that fires after the user pressed a key - calling the <code>enter-new-todo</code> with the event, <code>state</code> and <code>owner</code>.</p>
-
+<pre><code class="language-language-clojure" data-lang="language-clojure">(dom/input                      
+  #js {:id &quot;new-todo&quot;
+	   :placeholder &quot;What needs to be done?&quot;    
+       :onKeyDown #(enter-new-todo % state owner)})
+</code></pre><p>As we have seen before, <code>props</code> sets an <code>id</code> and <code>placeholder</code> value which will be rendered as HTML tag attributes. <code>onKeyDown</code> registers an event handler that fires after the user pressed a key - calling the <code>enter-new-todo</code> with the event, <code>state</code> and <code>owner</code>.</p>
 <p><strong>Note:</strong> <code>#(...)</code> is a <em>function literal</em>. Basically it&rsquo;s a short version of <code>(fn [evt] (enter-new-todo evt state owner))</code>. So <code>%</code> is the function&rsquo;s first parameter, <code>%2</code> the second and so on.</p>
-
 <p>Going back to <code>render</code> from above, the functions <code>header</code> and <code>footer</code> are not particularly interesting - let&rsquo;s have a look at <code>listing</code> instead:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn listing [{:keys [todos showing editing] :as state}]
-  (dom/section #js {:id &#34;main&#34; :style (hidden (empty? todos))}
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defn listing [{:keys [todos showing editing] :as state}]
+  (dom/section #js {:id &quot;main&quot; :style (hidden (empty? todos))}
     (dom/input
-      #js {:id &#34;toggle-all&#34; :type &#34;checkbox&#34;
+      #js {:id &quot;toggle-all&quot; :type &quot;checkbox&quot;
            :onChange #(toggle-all % state)
            :checked (every? :completed todos)})
-    (apply dom/ul #js {:id &#34;todo-list&#34;}
-	  (list-items todos showing editing))))</code></pre></div>
-<p>The list of todos is wrapped in a <code>&lt;section&gt;</code> with the id <code>main</code>. It is hidden when there are no todos (by using the <code>hidden</code> utility function we saw last the time). Inside we find a checkbox which is checked only if every todo item is marked &lsquo;completed&rsquo;. On change it invokes the <code>toggle-all</code> event handler. Furthermore an <code>&lt;ul&gt;</code> element is created and renders the children that it receives from the <code>list-items</code> function.</p>
-
+    (apply dom/ul #js {:id &quot;todo-list&quot;}
+	  (list-items todos showing editing))))
+</code></pre><p>The list of todos is wrapped in a <code>&lt;section&gt;</code> with the id <code>main</code>. It is hidden when there are no todos (by using the <code>hidden</code> utility function we saw last the time). Inside we find a checkbox which is checked only if every todo item is marked &lsquo;completed&rsquo;. On change it invokes the <code>toggle-all</code> event handler. Furthermore an <code>&lt;ul&gt;</code> element is created and renders the children that it receives from the <code>list-items</code> function.</p>
 <p><strong>Note:</strong> The <code>apply</code> function - comparable to the correspondent JavaScript function - is necessary to convert the sequence of components from <code>list-items</code> to individual function parameters of <code>dom/ul</code>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn list-items [todos showing editing]
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defn list-items [todos showing editing]
   (om/build-all item/todo-item todos
 	{:key :id
 	 :fn (fn [todo]
            (cond-&gt; todo
 		     (= (:id todo) editing)        (assoc :editing true)
-		     (not (visible? todo showing)) (assoc :hidden true)))}))</code></pre></div>
-<p><code>list-items</code> uses Om&rsquo;s <code>build-all</code> function to create a sequence of a component, in this case <code>todo-item</code>. The second parameter is a sequence of state each component receives, here it is <code>todos</code>. And the third parameter is a map of options:</p>
-
+		     (not (visible? todo showing)) (assoc :hidden true)))}))
+</code></pre><p><code>list-items</code> uses Om&rsquo;s <code>build-all</code> function to create a sequence of a component, in this case <code>todo-item</code>. The second parameter is a sequence of state each component receives, here it is <code>todos</code>. And the third parameter is a map of options:</p>
 <ul>
 <li><code>:key</code> is a keyword used to look up a value in the state which will serve as a React key (<code>id</code> in our case). This makes rendering <a href="http://facebook.github.io/react/docs/multiple-components.html#dynamic-children">more efficient</a> since upon re-rendering React knows which DOM node belongs to which sequence element.</li>
-<li><code>:fn</code> is a function to apply to the state before rendering it. The employed function uses the funky looking <code>cond-&gt;</code> macro which <em>threads</em> the expression <code>todo</code> through the given pairs of forms. Firstly, it adds the flag <code>editing</code> to any todo which has the same id as the one being edited right now (if any). Secondly, it adds the flag <code>hidden</code> if the completion state of the item does not match the <code>showing</code> view filter (using the utility function <code>visible?</code>).
-<br /></li>
+<li><code>:fn</code> is a function to apply to the state before rendering it. The employed function uses the funky looking <code>cond-&gt;</code> macro which <em>threads</em> the expression <code>todo</code> through the given pairs of forms. Firstly, it adds the flag <code>editing</code> to any todo which has the same id as the one being edited right now (if any). Secondly, it adds the flag <code>hidden</code> if the completion state of the item does not match the <code>showing</code> view filter (using the utility function <code>visible?</code>).</li>
 </ul>
-
 <p>Now, let&rsquo;s have a look at the <code>todo-item</code> component.</p>
-
 <h2 id="component-todo-item">Component &lsquo;todo-item&rsquo;</h2>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn todo-item [todo owner]
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defn todo-item [todo owner]
   (reify
     om/IInitState
     (init-state [_]
@@ -226,37 +186,33 @@ app-state                                          ;; (b)
 
 	om/IRenderState
     (render-state [_ state]
-      (let [class (cond-&gt; &#34;&#34;
-                    (:completed todo) (str &#34;completed&#34;)
-                    (:editing todo)   (str &#34;editing&#34;))]
+      (let [class (cond-&gt; &quot;&quot;
+                    (:completed todo) (str &quot;completed&quot;)
+                    (:editing todo)   (str &quot;editing&quot;))]
         (dom/li 
           #js {:className class :style (hidden (:hidden todo))}
           (dom/div 
-            #js {:className &#34;view&#34;}
+            #js {:className &quot;view&quot;}
             (dom/input
-              #js {:className &#34;toggle&#34; :type &#34;checkbox&#34;
-                   :checked (and (:completed todo) &#34;checked&#34;)
+              #js {:className &quot;toggle&quot; :type &quot;checkbox&quot;
+                   :checked (and (:completed todo) &quot;checked&quot;)
                    :onChange #(complete todo)})
             (dom/label
               #js {:onDoubleClick #(edit % todo owner)}
               (:title todo))
             (dom/button
-              #js {:className &#34;destroy&#34;
+              #js {:className &quot;destroy&quot;
                    :onClick #(destroy todo)}))
           (dom/input
-            #js {:className &#34;edit&#34;
+            #js {:className &quot;edit&quot;
                  :value (om/get-state owner :edit-text)
                  :onBlur #(submit % todo owner)
                  :onChange #(change % todo owner)
-                 :onKeyDown #(key-down % todo owner)}))))))</code></pre></div>
-<p>This looks pretty complex but it is actually quite simple. The <code>render</code> from <code>IRenderState</code> has an additional parameter compared to <code>IRender</code>: the state. It creates a <code>li</code> tag with two children: a div <code>#view</code> and a text input <code>#edit</code>. Depending on the value of <code>class</code> - which is constructed by <code>cond-&gt;</code> - one of them is displayed.</p>
-
+                 :onKeyDown #(key-down % todo owner)}))))))
+</code></pre><p>This looks pretty complex but it is actually quite simple. The <code>render</code> from <code>IRenderState</code> has an additional parameter compared to <code>IRender</code>: the state. It creates a <code>li</code> tag with two children: a div <code>#view</code> and a text input <code>#edit</code>. Depending on the value of <code>class</code> - which is constructed by <code>cond-&gt;</code> - one of them is displayed.</p>
 <p>Inside the view div a checkbox (to mark the item as completed), a label (to display the todo) and a button (to destroy it) are added. The declared event handlers are basically self-explanatory.</p>
-
 <p>The component also implements the <code>IInitState</code> protocol: <code>init-state</code> returns a map containing the component&rsquo;s initialized local state. This is different from the global or passed-in state since it is usually just transient, component-specific information. In the text input you can see it being read with <code>om/get-state</code>. We don&rsquo;t use the todo&rsquo;s title directly since the user might abort during editing and then we would have lost the original value. <code>edit-text</code> is simply a temporary title.</p>
-
-<hr/>
-
+<!-- raw HTML omitted -->
 <p>That&rsquo;s it for now, kids! In <a href="/zero-to-om-act-4"><strong>Act 4</strong></a> we&rsquo;ll see how the user can interact with the application.</p>
 
 
@@ -370,7 +326,7 @@ app-state                                          ;; (b)
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.497428 -0700 PDT m=&#43;0.306232393">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.376873 -0700 PDT m=&#43;0.109658084">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

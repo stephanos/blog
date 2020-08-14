@@ -72,62 +72,37 @@
 
 
 		<p>In the movie <a href="http://www.imdb.com/title/tt0062622/">2001: A Space Odyssey</a> the computer program HAL 9000 goes rogue, showing no mercy towards the space ship&rsquo;s crew. That&rsquo;s exactly how newcomers to the <a href="https://en.wikipedia.org/wiki/Go_(programming_language)">Go programming language</a> must feel.</p>
-
 <p>Since its introduction in 2009, the language has produced gigabytes worth of online debate about its very opinionated philosophy. Since it is a statically-compiled language, it has a compiler. And just like HAL the Go compiler is quite stubborn and - dare I say - <em>merciless</em>.</p>
-
 <p>Take the case of <a href="http://stackoverflow.com/questions/19560334">this poor developer</a> who cannot believe the Go compiler could be so cruel:</p>
-
 <blockquote>
 <p>TBH, it is the most stupid thing I have ever seen in a programming language</p>
 </blockquote>
-
 <p>Odd, I thought <a href="https://www.quora.com/What-is-the-worst-mistake-ever-made-in-computer-science-and-programming-that-proved-to-be-painful-for-programmers-for-years">the invention of the null reference</a> is the clear winner here. Anyway, what brought that guy to declare that the pinnacle of stupidity had finally been reached? <strong>The Go compiler will not let you run code with unused imports.</strong></p>
-
-<p><img src="/images/2016/08/hal.jpg" alt="" /></p>
-
+<p><img src="/images/2016/08/hal.jpg" alt=""></p>
 <p>At this point, you may wonder why the compiler is so adamant about that? As far as I know, it&rsquo;s unique in that regard. Why, for example, doesn&rsquo;t it just show a warning in this case?</p>
-
 <p>Let&rsquo;s ask the people who ought to know: the language creators. Among them, you will find two living legends of computer science: Rob Pike and Ken Thompson. Both were involved in the creation of Unix. Let&rsquo;s look at their official best practice guide <a href="https://golang.org/doc/effective_go.html#blank_unused">Effective Go</a> for answers:</p>
-
 <blockquote>
 <p>It is an error to import a package [&hellip;] without using it. Unused imports bloat the program and slow compilation.</p>
 </blockquote>
-
 <p>Fair enough. Nobody likes slow compilers. You will find exuberant praise online how incredibly fast Go&rsquo;s compiler is. Its workflow feels almost like in a dynamically-typed language with a lightning-fast feedback loop.</p>
-
 <p>This is no accident.</p>
-
 <p>Actually, it is one of the language&rsquo;s core design principles. Not allowing unused imports is just one piece of the puzzle. To get a glimpse of where it all originates, examine the following excerpt from an <a href="http://www.informit.com/articles/article.aspx?p=1623555">interview with Rob Pike</a>:</p>
-
 <blockquote>
 <p>The <strong>starting point was long compile times</strong> —for some of our big software at Google, build times can be unreasonably long, even with our large distributed compilation clusters. The dependency management (or lack thereof) in C and C++ results in far too much code going through the compiler. <strong>You might say that Go was conceived while waiting for a big compilation.</strong></p>
 </blockquote>
-
 <p>We&rsquo;ve all seen countless memes about <a href="https://xkcd.com/303/">what developers do while waiting for the compiler</a> - but this one certainly takes the cake. With that back story, you can understand why Go was built from the ground up to compile as fast as possible. And in order to get there, you have to make sacrifices. By not allowing <em>waste</em> like unused imports through the compiler pipeline, the process is much more efficient. But to an outsider, only seeing the tip of the iceberg, this may look like &ldquo;the most stupid thing in a programming language&rdquo;.</p>
-
 <p>But the iceberg goes much deeper.</p>
-
 <p>The pursuit for the fastest compiler possible produced another merciless decision that heavily influences every application&rsquo;s design: <strong>not allowing circular package dependencies.</strong> When package <code>A</code> depends on package <code>B</code> and vice versa, we have a circular package dependency, or import cycle. For that, Go will throw an error at you faster than you can say &lsquo;cycle&rsquo;.</p>
-
 <p>From a design perspective, a cycle on package-level is bad news. It tightly couples everything on that cycle, making it harder to change and reason about. Interestingly, many other programming languages are pretty tolerant about import cycles. In Java, for example, you might not even notice that there are cycles in your code at all. Then why is Go so unrelenting?</p>
-
 <p>Compiler speed, again. Go uses a <a href="https://en.wikipedia.org/wiki/One-pass_compiler">one-pass compiler</a> which processes each source file only once. Therefore it&rsquo;s not as sophisticated as for example Java&rsquo;s <a href="https://en.wikipedia.org/wiki/Multi-pass_compiler">multi-pass compiler</a> - but mighty fast. This decision also <em>fundamentally</em> influenced Go&rsquo;s design. It forced the language to be simple: the language specification can easily be read in less than a day, while you&rsquo;d need an ancient redwood tree to produce enough paper for Java&rsquo;s specification.</p>
-
 <p>Technically, we have not yet answered why Go cannot just use warnings during development. Luckily, the <a href="https://golang.org/doc/faq">Go FAQ</a> does:</p>
-
 <blockquote>
 <p>Some have asked for a compiler option to turn those checks off or at least reduce them to warnings. Such an option has not been added, though, because compiler options should not affect the semantics of the language and because the Go compiler does not report warnings, only errors that prevent compilation.</p>
 </blockquote>
-
 <p>After all you&rsquo;ve read, this should come as no surprise. Turning those errors into warnings would severely undermine the core philosophy of the language with its focus on speed and simplicity. Therefore, it&rsquo;s only right to deny any such requests.</p>
-
 <p>At this point it&rsquo;s worth mentioning that there are easy ways around this issue during development. The idiomatic way is to use the underscore character for the import name:</p>
-
 <pre><code>import _ &quot;fmt&quot;
-</code></pre>
-
-<p>This way, it will simply be ignored by the compiler. But an even smarter way had emerged: the (now official) command tool <code>goimports</code> automatically adds missing imports and removes unused ones. You can configure your editor of choice to run it after you save a file. As you would expect by now, it is lightning fast. It takes the developer out of the loop, solving an issue from one tool with another one. I cannot help but smile at the irony yet the brilliance of that.</p>
-
+</code></pre><p>This way, it will simply be ignored by the compiler. But an even smarter way had emerged: the (now official) command tool <code>goimports</code> automatically adds missing imports and removes unused ones. You can configure your editor of choice to run it after you save a file. As you would expect by now, it is lightning fast. It takes the developer out of the loop, solving an issue from one tool with another one. I cannot help but smile at the irony yet the brilliance of that.</p>
 <p>As we have seen, the Go compiler might be considered merciless. At least HAL 9000 had a gentle voice to soften the blow! But as you have seen, it has the very best intentions. It is a small price to pay for the simplicity and speed you get in return. And ultimately, your code and workflow are all the better for it.</p>
 
 
@@ -241,7 +216,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.328004 -0700 PDT m=&#43;0.136810875">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.360755 -0700 PDT m=&#43;0.093540765">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

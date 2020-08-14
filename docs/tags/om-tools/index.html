@@ -52,8 +52,8 @@
         <p>
             Welcome to our next act. Today we&rsquo;re going to meet a few additional libraries that&rsquo;ll help us write great Om applications. Let&rsquo;s get started!
 As always, I strongly recommend reading the previous post first if you haven&rsquo;t done so already.
- sablono In a previous post I showed you how the application&rsquo;s UI is rendered:
-(dom/div nil (header) (dom/input #js {:id &#34;new-todo&#34; :ref &#34;newField&#34; :placeholder &#34;What needs to be done?
+sablono In a previous post I showed you how the application&rsquo;s UI is rendered:
+(dom/div nil (header) (dom/input #js {:id &quot;new-todo&quot; :ref &quot;newField&quot; :placeholder &quot;What needs to be done?&quot; :onKeyDown #(enter-new-todo % state owner)}) (listing state) (footer state))))) As you can see, a dom/* HTML element receives a map of properties: #js {.
         </p>
     </div>
 </a>
@@ -72,7 +72,7 @@ As always, I strongly recommend reading the previous post first if you haven&rsq
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.476252 -0700 PDT m=&#43;0.285056747">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.521028 -0700 PDT m=&#43;0.253811400">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

@@ -71,69 +71,32 @@
 </style>
 
 
-		
-
-<p>The brand new experimental macro feature in Scala 2.10 can be used in many interesting ways:</p>
-
+		<p>The brand new experimental macro feature in Scala 2.10 can be used in many interesting ways:</p>
 <ul>
 <li><a href="https://github.com/pniederw/expecty">writing concise test cases</a>,</li>
 <li><a href="http://mandubian.com/2012/11/11/JSON-inception/">generating serialization code</a></li>
 <li><a href="https://github.com/paulp/declosurify">inlining methods</a></li>
 </ul>
-
 <p>This article shows exciting new possibilities it opens up for teaching Scala. To quote one student: &ldquo;This is so awesome &hellip; and fun!&rdquo;.</p>
-
 <p>Exercises are a crucial part of the &ldquo;Introduction to Scala&rdquo; training course I developed for German-speaking software engineers. Nobody wants to listen to someone else&rsquo;s dialog for 8 hours - they want to get a feeling for the new language, try out the new syntax, play around with new features.</p>
-
 <h3 id="designing-training-exercises">Designing training exercises</h3>
-
 <p>But there is always the problem of making sure that the students are on the right track when solving the exercises. Depending on the size of the course you cannot look over everyone&rsquo;s shoulder all the time.</p>
-
 <p>This is why I decided to leverage unit tests: Students can use pre-written tests to work through the exercises step by step, knowing immediately whether they are doing something wrong. When results are shared and discussed in the end, unpleasant surprises can be avoided.</p>
-
 <h3 id="adding-macros-to-it">Adding macros to it</h3>
-
 <p>So, I hear you ask, what does that have to do with macros? Scala macros allow you to make certain tests that were not possible before. Let&rsquo;s have a look.</p>
-
-<script src="https://gist.github.com/4643260.js"></script>
-
+<!-- raw HTML omitted -->
 <p>The snippet above illustrates an exercise to teach pattern matching. In the presentation the students listened to earlier, various patterns like the alternative and wildcard pattern were introduced.</p>
-
 <p>The exercise description states: <strong>Rewrite this code in 3 lines or less</strong>. This way, students have to think about how to apply the new features.</p>
-
-<p>Furthermore, they were taught that a <strong>var</strong> should be used sparsely. The unit test is able to check for that as well.</p>
-
+<p>Furthermore, they were taught that a <!-- raw HTML omitted -->var<!-- raw HTML omitted --> should be used sparsely. The unit test is able to check for that as well.</p>
 <p>So macros allow to test various code styles and metrics. Cool!</p>
-
 <h3 id="how-it-works">How it works</h3>
-
 <p>Behind the scenes, the unit tests use <a href="http://docs.scala-lang.org/overviews/macros/overview.html">def macros</a> since type macros are only available in an experimental Scala 2.11 branch. First, I thought it may not be possible with this limitation, but thanks to some help from Eugene Burmako - member of the official Scala team - it worked out great.</p>
-
 <p>The method <code>task</code> - part of the trait <code>Testable</code> that each exercise inherits from - calls a macro. Now it&rsquo;s getting interesting. Since def macros cannot add fields or methods to existing classes I had to create a base class <code>Task</code> with all fields I would need later, e.g. to count the number of <code>vars</code> the code uses.</p>
-
-<table>
-<colgroup>
-    <col width="40%">
-    <col width="60%">
-</colgroup>
-<tr>
-    <td>
-        <script src="https://gist.github.com/4643398.js"></script>
-    </td>
-    <td>
-        <script src="https://gist.github.com/4647618.js"></script>
-    </td>
-</tr>
-</table>
-
+<!-- raw HTML omitted -->
 <p>Then the macro would generate a call to the method <code>registerTask</code> with an instance of type <code>Task</code>. Since the fields are already declared, they can simply be overridden by the macro on instantiation. Et voilà!</p>
-
 <p>The complete macro code is rather ugly and contains a few workarounds but the following snippet shows the small part where the number of <code>vars</code> is determined. Additionally, the method to actually overwrite the field can be seen.</p>
-
-<script src="https://gist.github.com/4647666.js"></script>
-
+<!-- raw HTML omitted -->
 <p>All in all, the macro worked pretty well in my recent Scala training. The students were quite astonished when the length and style of their solutions were judged. I think it&rsquo;s a great way of making sure the students adhere to the rules and concepts they just learned about; preventing them to just stick to their old Java habits.</p>
-
 <p>I&rsquo;m looking forward to the possibilities the type macros will bring in 2.11. <strong>Thanks for reading.</strong></p>
 
 
@@ -246,7 +209,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.503984 -0700 PDT m=&#43;0.312787713">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.35894 -0700 PDT m=&#43;0.091725132">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

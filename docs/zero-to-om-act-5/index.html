@@ -71,143 +71,71 @@
 </style>
 
 
-		
-
-<p>In this part we will have a closer look at the app&rsquo;s build configuration and discover what it can do for us. The source code can be found on <a href="https://github.com/stephanos/om-tutorial/tree/act-5">GitHub</a>.</p>
-
+		<p>In this part we will have a closer look at the app&rsquo;s build configuration and discover what it can do for us. The source code can be found on <a href="https://github.com/stephanos/om-tutorial/tree/act-5">GitHub</a>.</p>
 <p><strong>Note:</strong> I strongly recommend reading the <a href="/zero-to-om-act-4">previous post</a> first if you haven&rsquo;t done so already.</p>
-
-<hr/>
-
+<!-- raw HTML omitted -->
 <h2 id="the-build-config">The Build Config</h2>
-
 <p>The project&rsquo;s build configuration is defined in <code>project.clj</code>. It is written in Clojure and looks like this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; project.clj, part 1
-(defproject todomvc &#34;0.1.0-SNAPSHOT&#34;
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; project.clj, part 1
+(defproject todomvc &quot;0.1.0-SNAPSHOT&quot;
 
-  :jvm-opts ^:replace [&#34;-Xms4g&#34; &#34;-Xmx4g&#34; &#34;-server&#34;]
+  :jvm-opts ^:replace [&quot;-Xms4g&quot; &quot;-Xmx4g&quot; &quot;-server&quot;]
 
-  :dependencies [[org.clojure/clojure &#34;1.6.0&#34;]
-                 [org.clojure/clojurescript &#34;0.0-2280&#34;]
-                 [org.clojure/core.async &#34;0.1.267.0-0d7780-alpha&#34;]
-				 [secretary &#34;1.2.0&#34;]
-                 [om &#34;0.7.1&#34;]]
+  :dependencies [[org.clojure/clojure &quot;1.6.0&quot;]
+                 [org.clojure/clojurescript &quot;0.0-2280&quot;]
+                 [org.clojure/core.async &quot;0.1.267.0-0d7780-alpha&quot;]
+				 [secretary &quot;1.2.0&quot;]
+                 [om &quot;0.7.1&quot;]]
 
-  :plugins [[lein-cljsbuild &#34;1.0.4-SNAPSHOT&#34;]]</code></pre></div>
-<p>Basically, it&rsquo;s just one big map of vectors. The <code>dependencies</code> are automatically loaded from Leiningen. <code>cljsbuild</code> is a plugin that allows to compile ClojureScript to JavaScript - its configuration is:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">;; project.clj, part 2
-:source-paths [&#34;src&#34;]
+  :plugins [[lein-cljsbuild &quot;1.0.4-SNAPSHOT&quot;]]
+</code></pre><p>Basically, it&rsquo;s just one big map of vectors. The <code>dependencies</code> are automatically loaded from Leiningen. <code>cljsbuild</code> is a plugin that allows to compile ClojureScript to JavaScript - its configuration is:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">;; project.clj, part 2
+:source-paths [&quot;src&quot;]
 
 :cljsbuild { 
-  :builds [{:id &#34;dev&#34;
-            :source-paths [&#34;src&#34;]
+  :builds [{:id &quot;dev&quot;
+            :source-paths [&quot;src&quot;]
             :compiler {
-              :output-to &#34;app.js&#34;
-              :output-dir &#34;out&#34;
+              :output-to &quot;app.js&quot;
+              :output-dir &quot;out&quot;
               :optimizations :none
-              :source-map true}}]})</code></pre></div>
-<p>Earlier we&rsquo;ve learned that to build the application we can use <code>lein cljsbuild once dev</code>. The command starts Leiningen and executes the <code>dev</code> build profile of the <code>cljsbuild</code> exactly once. If we use <code>auto</code> instead, it watches the source paths for any changes and triggers a build. Very handy during development.</p>
-
+              :source-map true}}]})
+</code></pre><p>Earlier we&rsquo;ve learned that to build the application we can use <code>lein cljsbuild once dev</code>. The command starts Leiningen and executes the <code>dev</code> build profile of the <code>cljsbuild</code> exactly once. If we use <code>auto</code> instead, it watches the source paths for any changes and triggers a build. Very handy during development.</p>
 <p>If you look into the <code>out</code> folder in the project&rsquo;s root directory after a build, you&rsquo;ll see that there is a folder for every dependency we&rsquo;ve specified. Inside you&rsquo;ll find the library&rsquo;s source files, in ClojureScript and JavaScript. Additionally, the Google Closure library files can be found in the <code>goog</code> directory.</p>
-
 <p><strong>Note:</strong> The <code>source-map</code> option tells the plugin to generate a <code>&lt;file-name&gt;.js.map</code> file for each compiled file. This allows the browser to show you the corresponding ClojureScript source code instead of an incomprehensible jumble of JavaScript code when there is a runtime error.</p>
-
 <h2 id="publishing">Publishing</h2>
-
 <p>There will come a time when you want to publish your application and share it with the world. The <code>out</code> folder contains roughly <strong>2 MB of JavaScript</strong>. Not to mention that they are scattered throughout 88 separate files. Sounds like the requirements for a browser benchmark, not like a usable web application!</p>
-
 <p>So we need to reduce the number of files and the total file size. That&rsquo;s where the Google Closure Compiler can help us. Below you&rsquo;ll find a new build profile called <code>release</code> which will solve all of our problems:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">:cljsbuild { 
-	:builds [{:id &#34;dev&#34;
+<pre><code class="language-language-clojure" data-lang="language-clojure">:cljsbuild { 
+	:builds [{:id &quot;dev&quot;
 						...}
 
-					{:id &#34;release&#34;
-					 :source-paths [&#34;src&#34;]
+					{:id &quot;release&quot;
+					 :source-paths [&quot;src&quot;]
 					 :compiler {
-					 :output-to &#34;out/app.min.js&#34;
+					 :output-to &quot;out/app.min.js&quot;
 					 :optimizations :advanced
 					 :elide-asserts true
 					 :pretty-print false
-					 	:source-map &#34;app.js.map&#34;
-				:externs [&#34;src/react-externs.js&#34;]}}]}</code></pre></div>
-<p>In contrast to the <code>dev</code> profile it outputs a single file, uses advanced optimizations, removes assertions and does not pretty print the JavaScript code. To run this build profile we use <code>lein cljsbuild once release</code>. It takes noticeable longer than the development profile but we&rsquo;ll only run this when we actually want to publish the app anyway.</p>
-
+					 	:source-map &quot;app.js.map&quot;
+				:externs [&quot;src/react-externs.js&quot;]}}]}
+</code></pre><p>In contrast to the <code>dev</code> profile it outputs a single file, uses advanced optimizations, removes assertions and does not pretty print the JavaScript code. To run this build profile we use <code>lein cljsbuild once release</code>. It takes noticeable longer than the development profile but we&rsquo;ll only run this when we actually want to publish the app anyway.</p>
 <p><strong>Note:</strong> The Closure Compiler is the bulldog among minifiers: very aggressive, stopping for no one. That&rsquo;s why you need to tell it what code it should NOT remove by using &lsquo;externs files&rsquo;, such as <a href="https://github.com/swannodette/react-cljs/blob/master/src/react/externs/react.js">react-extern.js</a> in our case.</p>
-
 <p>The following table gives you a feeling for the influence that the different options have on the final result. It shows the file sizes for the different &lsquo;modes&rsquo; the Closure Compiler offers:</p>
-
-<table style="width: 90%; margin: 0 auto;">
-  <col width="50%" />
-  <col width="25%" />
-  <col width="25%" />
-  <tr>
-    <td>
-      <strong>mode</strong>
-    </td>
-    <td>
-      <strong>size</strong>
-    </td>
-    <td>
-      <strong>gzip size</strong>
-    </td>
-  </tr>
-  <tr>
-    <td>
-        whitespace
-    </td>
-    <td>
-      1343 KB
-    </td>
-    <td>
-      180 KB
-    </td>
-  </tr>
-  <tr>
-    <td>
-      simple
-    </td>
-    <td>
-      858 KB
-    </td>
-    <td>
-      119 KB
-    </td>
-  </tr>
-  <tr>
-    <td style="width: 33%">
-      advanced
-    </td>
-    <td style="width: 33%">
-      192 KB
-    </td>
-    <td style="width: 33%">
-      47 KB
-    </td>
-  </tr>
-</table>
-
-<p><br/></p>
-
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <p>The advanced mode reduces the file size by roughly 78% compared to the simple mode. The Closure Compiler achieves this minification by making a dead code analysis: removing JavaScript code that won&rsquo;t be used by the app.</p>
-
 <p>So the best result we can expect is 47 KB gzipped. Sounds reasonable. For comparison, without the option <code>:elide-asserts true</code> the result for advanced mode grows to 195 KB (48 KB gzipped). Without setting <code>:pretty-print false</code> it even grows to 275 KB (53 KB gzipped).</p>
-
 <p>Of course there is one thing we&rsquo;ve left out: the footprint of the React library. The minified version is 123 KB (34 KB gzipped). That makes 81 KB gzipped in total. I&rsquo;ll let you decide for yourself whether this would be an acceptable value for <em>your</em> app :)</p>
-
-<p><br/></p>
-
+<!-- raw HTML omitted -->
 <p><strong>Tip of the Day:</strong> Leiningen allows you to specify an alias for single or multiple commands. This way, we can just create a <code>publish</code> command that runs a build using the release profile - and does a cleanup beforehand:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">:aliases {
-  &#34;publish&#34; [&#34;do&#34; [&#34;cljsbuild&#34; &#34;clean&#34;] [&#34;cljsbuild&#34; &#34;once&#34; &#34;release&#34;]]
-}</code></pre></div>
-<h2 id="outlook">Outlook</h2>
-
+<pre><code class="language-language-clojure" data-lang="language-clojure">:aliases {
+  &quot;publish&quot; [&quot;do&quot; [&quot;cljsbuild&quot; &quot;clean&quot;] [&quot;cljsbuild&quot; &quot;once&quot; &quot;release&quot;]]
+}
+</code></pre><h2 id="outlook">Outlook</h2>
 <p>There is a project called <a href="https://github.com/thheller/shadow-build">shadow-build</a> that allows you to split the final JavaScript file into multiple files, eg putting the common code (like the standard library) into one file and the rest into separate files. Then you could have separate &lsquo;areas&rsquo; in your application. For example, a user who doesn&rsquo;t go to the admin section won&rsquo;t need to download the source code for it. Currently, getting this functionality into ClojureScript directly is <a href="http://dev.clojure.org/display/design/Google+Closure+Modules">being discussed</a>.</p>
-
-<hr/>
-
+<!-- raw HTML omitted -->
 <p>This concludes our journey through the build facilities. Finally, I recommend glancing over the <a href="https://github.com/emezeske/lein-cljsbuild/blob/master/sample.project.clj">cljsbuild sample</a> once. It documents all the possible options of the ClojureScript plugin.</p>
-
 <p>In <a href="/zero-to-om-6"><strong>Act 6</strong></a> we&rsquo;ll have a look at libraries that help us create better Om applications!</p>
 
 
@@ -321,7 +249,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.492623 -0700 PDT m=&#43;0.301427139">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.395478 -0700 PDT m=&#43;0.128262978">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

@@ -71,65 +71,35 @@
 </style>
 
 
-		
-
-<p>This is the first part of a series of blog posts about Om. If you don&rsquo;t know anything about Om, don&rsquo;t worry! You&rsquo;ll learn everything step by step. Here are the basics: <em>Om is a ClojureScript interface to Facebook&rsquo;s React</em>. If that doesn&rsquo;t ring any bells, again, don&rsquo;t worry!</p>
-
+		<p>This is the first part of a series of blog posts about Om. If you don&rsquo;t know anything about Om, don&rsquo;t worry! You&rsquo;ll learn everything step by step. Here are the basics: <em>Om is a ClojureScript interface to Facebook&rsquo;s React</em>. If that doesn&rsquo;t ring any bells, again, don&rsquo;t worry!</p>
 <p><strong>NOTE</strong>: I <em>just</em> started learning React.js, ClojureScript and Om. So this is my way of trying to learn this myself: By taking you on the ride with me. Basic knowledge about modern web development is required, though.</p>
-
 <h2 id="the-stage">The Stage</h2>
-
 <p>Learning by doing is fun. We are going to learn Om with the help of a little todo app.</p>
-
 <p>If you are a web developer and haven&rsquo;t heard of <a href="http://todomvc.com/">TodoMVC</a> yet you were either unemployed or in a coma for the last few years (you didn&rsquo;t miss much except for React.js). It&rsquo;s a &ldquo;project which offers the same Todo application implemented [&hellip;] in most of the popular JavaScript frameworks of today&rdquo;.</p>
-
 <p>This is how it looks:
-<img src="/images/2014/Aug/todos.png" alt="" /></p>
-
+<img src="/images/2014/Aug/todos.png" alt=""></p>
 <p>As the foundation of this series I will use an <a href="https://github.com/swannodette/todomvc/tree/gh-pages/labs/architecture-examples/om">implementation of the Todo app</a> written by the creator of Om himself, <a href="https://github.com/swannodette">David Nolen</a>. You can <a href="http://swannodette.github.io/todomvc/labs/architecture-examples/om/">play with the app</a> to see what it can do.</p>
-
 <h2 id="the-actors">The Actors</h2>
-
 <p>Let&rsquo;s see what technologies we need for our endeavour.</p>
-
-<h3 id="react-js">React.js</h3>
-
-<p><img src="/images/2014/Aug/logo_og.png" alt="" /></p>
-
+<h3 id="reactjs">React.js</h3>
+<p><img src="/images/2014/Aug/logo_og.png" alt=""></p>
 <p><a href="http://facebook.github.io/react/">React.js</a> is a JavaScript library from Facebook for building user interfaces. Think of it as the V in MVC. It keeps data and DOM in-sync and is <em>very</em> efficiently at it by using an in-memory (virtual) DOM to batch all updates at once. That&rsquo;s exactly how 3D engines work as well.</p>
-
 <h3 id="clojurescript">ClojureScript</h3>
-
-<p><img src="/images/2014/Aug/apple-touch-icon-precomposed-1.png" alt="" /></p>
-
+<p><img src="/images/2014/Aug/apple-touch-icon-precomposed-1.png" alt=""></p>
 <p><a href="https://github.com/clojure/ClojureScript">ClojureScript</a> is a Clojure dialect that compiles to JavaScript. It is a dynamically typed, functional programming language with a strong focus on immutable data structures.</p>
-
 <h3 id="google-closure-tools">Google Closure Tools</h3>
-
-<p><img src="/images/2014/Aug/closure.png" alt="" /></p>
-
+<p><img src="/images/2014/Aug/closure.png" alt=""></p>
 <p><a href="https://developers.google.com/closure/">Google Closure Tools</a> consist of a JavaScript library with utilities for rich, cross-browser web applications and a compiler for optimizing JavaScript.</p>
-
 <h3 id="light-table">Light Table</h3>
-
-<p><img src="/images/2014/Aug/logo.png" alt="" /></p>
-
+<p><img src="/images/2014/Aug/logo.png" alt=""></p>
 <p><a href="http://www.lighttable.com/">Light Table</a> is an open source IDE mainly geared towards Clojure/ClojureScript development. One of its most interesting features is the inline evaluation of code.</p>
-
 <h3 id="leiningen">Leiningen</h3>
-
-<p><img src="/images/2014/Aug/leiningen-full.jpg" alt="" /></p>
-
+<p><img src="/images/2014/Aug/leiningen-full.jpg" alt=""></p>
 <p><a href="http://leiningen.org/">Leiningen</a> is a JVM-based build tool for Clojure. Its <a href="https://github.com/emezeske/lein-cljsbuild">cljsbuild</a> plugin automates compiling ClojureScript into JavaScript.</p>
-
 <h3 id="om">Om</h3>
-
 <p>Finally, <a href="https://github.com/swannodette/om">Om</a> is the magic goo that combines the functional nature of React with the functional language ClojureScript and its immutable data structures, simplifying application architecture and increasing performance significantly in the process.</p>
-
 <h2 id="act-1">Act 1</h2>
-
 <p>At first, let&rsquo;s try to run the application. If we checkout my - slightly modified version of the original - <a href="https://github.com/stephanos/om-tutorial">from GitHub</a> - we&rsquo;ll see a bunch of files:</p>
-
 <pre><code>bower_components/
    todomvc-common/
 src/
@@ -141,49 +111,38 @@ bower.json
 index.html
 project.clj
 readme.md
-</code></pre>
-
-<p><code>bower.json</code> is the manifest file for <a href="http://bower.io/">Bower</a> which manages external resources. In this case it downloaded a stylesheet and an image into <code>todomvc-common</code> for us.</p>
-
+</code></pre><p><code>bower.json</code> is the manifest file for <a href="http://bower.io/">Bower</a> which manages external resources. In this case it downloaded a stylesheet and an image into <code>todomvc-common</code> for us.</p>
 <p><code>index.html</code> is the HTML file we open in our browser to showcase our app. So let&rsquo;s go for it!</p>
-
 <p>And &hellip; <strong>darn</strong>!</p>
-
 <pre><code>GET file:///.../out/goog/base.js net::ERR_FILE_NOT_FOUND index.html:15
 GET file:///.../app.js net::ERR_FILE_NOT_FOUND index.html:16
 Uncaught ReferenceError: goog is not defined 
-</code></pre>
-
-<p>Well, let&rsquo;s look at the file to see what might have gone wrong:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-markup" data-lang="language-markup">&lt;head&gt;
+</code></pre><p>Well, let&rsquo;s look at the file to see what might have gone wrong:</p>
+<pre><code class="language-language-markup" data-lang="language-markup">&lt;head&gt;
   [...]
-  &lt;link rel=&#34;stylesheet&#34; href=&#34;bower_components/todomvc-common/base.css&#34;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;bower_components/todomvc-common/base.css&quot;&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;section id=&#34;todoapp&#34;&gt;&lt;/section&gt;
+  &lt;section id=&quot;todoapp&quot;&gt;&lt;/section&gt;
   [...]
-  &lt;script src=&#34;http://fb.me/react-0.11.1.js&#34;&gt;&lt;/script&gt;
-  &lt;script src=&#34;out/goog/base.js&#34;&gt;&lt;/script&gt;
-  &lt;script src=&#34;app.js&#34;&gt;&lt;/script&gt;
-  &lt;script&gt;goog.require(&#34;todomvc.app&#34;);&lt;/script&gt;
-&lt;/body&gt;</code></pre></div>
-<p>The file loads a bunch of scripts and if you look at our current directory you&rsquo;ll quickly notice: most of them don&rsquo;t exist, yet. We need to build them first!</p>
-
+  &lt;script src=&quot;http://fb.me/react-0.11.1.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;out/goog/base.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;goog.require(&quot;todomvc.app&quot;);&lt;/script&gt;
+&lt;/body&gt;
+</code></pre><p>The file loads a bunch of scripts and if you look at our current directory you&rsquo;ll quickly notice: most of them don&rsquo;t exist, yet. We need to build them first!</p>
 <p>That&rsquo;s where we need <code>project.clj</code>. It contains the project&rsquo;s build configuration for Leiningen. Next, we run:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-bash" data-lang="language-bash">$ leiningen cljsbuild once dev
+<pre><code class="language-language-bash" data-lang="language-bash">$ leiningen cljsbuild once dev
 Compiling ClojureScript.
-Compiling &#34;app.js&#34; from [&#34;src&#34;]...</code></pre></div>
-<p>Now we have a new file called <code>app.js</code> and a folder <code>out</code> with lots of files in it. If we refresh the browser the issues are gone and we gaze upon a functioning Todo app. Splendid!</p>
-
+Compiling &quot;app.js&quot; from [&quot;src&quot;]...
+</code></pre><p>Now we have a new file called <code>app.js</code> and a folder <code>out</code> with lots of files in it. If we refresh the browser the issues are gone and we gaze upon a functioning Todo app. Splendid!</p>
 <p>If we look into <code>app.js</code> we&rsquo;ll see something like this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-javascript" data-lang="language-javascript">goog.addDependency(&#34;base.js&#34;, [&#39;goog&#39;], []);
-goog.addDependency(&#34;../cljs/reader.js&#34;, [&#39;cljs.reader&#39;], [&#39;goog.string&#39;, &#39;cljs.core&#39;]);
-goog.addDependency(&#34;../om/dom.js&#34;, [&#39;om.dom&#39;], [&#39;cljs.core&#39;]);
-[...]</code></pre></div>
-<p>This is Google Closure at work. It features a <em>module loader</em>. Every ClojureScript file translates into a Closure module. Each module can depend on numerous other modules. The loader is found in <code>out/goog/base.js</code>. All the app&rsquo;s dependencies are defined in <code>app.js</code>. To kickstart our app we need to load the main module: <code>goog.require(&quot;todomvc.app&quot;)</code>. And that is exactly what the <code>index.html</code> does.</p>
-
-<hr/>
-
+<pre><code class="language-language-javascript" data-lang="language-javascript">goog.addDependency(&quot;base.js&quot;, ['goog'], []);
+goog.addDependency(&quot;../cljs/reader.js&quot;, ['cljs.reader'], ['goog.string', 'cljs.core']);
+goog.addDependency(&quot;../om/dom.js&quot;, ['om.dom'], ['cljs.core']);
+[...]
+</code></pre><p>This is Google Closure at work. It features a <em>module loader</em>. Every ClojureScript file translates into a Closure module. Each module can depend on numerous other modules. The loader is found in <code>out/goog/base.js</code>. All the app&rsquo;s dependencies are defined in <code>app.js</code>. To kickstart our app we need to load the main module: <code>goog.require(&quot;todomvc.app&quot;)</code>. And that is exactly what the <code>index.html</code> does.</p>
+<!-- raw HTML omitted -->
 <p>This concludes the first act.
 In <a href="/zero-to-om-act-2/"><strong>Act 2</strong></a> we will look at the ClojureScript source code in detail.</p>
 
@@ -298,7 +257,7 @@ In <a href="/zero-to-om-act-2/"><strong>Act 2</strong></a> we will look at the C
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.499872 -0700 PDT m=&#43;0.308676500">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.389571 -0700 PDT m=&#43;0.122355779">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

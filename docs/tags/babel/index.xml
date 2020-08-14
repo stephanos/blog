@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>babel on This Programming Life</title>
@@ -18,7 +18,7 @@
       
       <guid>https://blog.stephanbehnke.com/hunt-for-immutable-type-safe-record-in-javascript/</guid>
       <description>Ever since working with Scala&amp;rsquo;s case classes I was hooked on the idea of having a type safe data record that was also immutable. What&amp;rsquo;s not to like? It&amp;rsquo;s type safe and immutable (duh). So I wanted to see if I can get the same thing in JavaScript - the most mutable and dynamic language known to man.
-class Person { givenName; familyName; }  This will serve as our starting point: a simple class in JavaScript.</description>
+class Person { givenName; familyName; } This will serve as our starting point: a simple class in JavaScript.</description>
     </item>
     
   </channel>

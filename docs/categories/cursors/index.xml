@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cursors on This Programming Life</title>
@@ -19,7 +19,7 @@
       <guid>https://blog.stephanbehnke.com/zero-to-om-act-4/</guid>
       <description>Until now the application is rather boring. It just displays data. But we want to actually use it! In this post we will take a look at how the app reacts (no pun intented) to user input. The source code can be found on GitHub.
 Note: I strongly recommend reading the previous post first if you haven&amp;rsquo;t done so already.
- Managing state is tricky. Each framework has its own mechanisms to detect and handle state changes.</description>
+Managing state is tricky. Each framework has its own mechanisms to detect and handle state changes.</description>
     </item>
     
   </channel>

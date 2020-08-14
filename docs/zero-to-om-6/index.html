@@ -71,103 +71,85 @@
 </style>
 
 
-		
-
-<p>Welcome to our next act. Today we&rsquo;re going to meet a few additional libraries that&rsquo;ll help us write great Om applications. Let&rsquo;s get started!</p>
-
+		<p>Welcome to our next act. Today we&rsquo;re going to meet a few additional libraries that&rsquo;ll help us write great Om applications. Let&rsquo;s get started!</p>
 <p>As always, I strongly recommend reading the <a href="/zero-to-om-act-5">previous post</a> first if you haven&rsquo;t done so already.</p>
-
-<hr/> 
-
+<!-- raw HTML omitted -->
 <h2 id="sablono">sablono</h2>
-
 <p>In a previous post I showed you how the application&rsquo;s UI is rendered:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(dom/div nil
+<pre><code class="language-language-clojure" data-lang="language-clojure">(dom/div nil
   (header)
   (dom/input 
-    #js {:id &#34;new-todo&#34; :ref &#34;newField&#34;
-         :placeholder &#34;What needs to be done?&#34;
+    #js {:id &quot;new-todo&quot; :ref &quot;newField&quot;
+         :placeholder &quot;What needs to be done?&quot;
          :onKeyDown #(enter-new-todo % state owner)})
   (listing state)
-  (footer state)))))</code></pre></div>
-<p>As you can see, a <code>dom/*</code> HTML element receives a map of properties: <code>#js {...}</code> or <code>nil</code> for no properties. This is all a bit awkward. No designer will ever be happy with this. And that&rsquo;s where <a href="https://github.com/r0man/sablono">sablono</a> can help you turn the code into this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(html
+  (footer state)))))
+</code></pre><p>As you can see, a <code>dom/*</code> HTML element receives a map of properties: <code>#js {...}</code> or <code>nil</code> for no properties. This is all a bit awkward. No designer will ever be happy with this. And that&rsquo;s where <a href="https://github.com/r0man/sablono">sablono</a> can help you turn the code into this:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">(html
   [:div
 	(header)
 	[:input
-		{:id &#34;new-todo&#34; :ref &#34;newField&#34;
-		 :placeholder &#34;What needs to be done?&#34;
+		{:id &quot;new-todo&quot; :ref &quot;newField&quot;
+		 :placeholder &quot;What needs to be done?&quot;
 		 :on-key-down #(enter-new-todo % state owner)}]
 	(listing state comm)
-	(footer state)])))</code></pre></div>
-<p>Ah, much better! Each HTML element is represented by a keyword at the beginning of a vector. Then, an optional map defines its attributes. Everything else must evaluate to another HTML element, and so on. All attributes match ClojureScript&rsquo;s default naming conventions and are automatically converted to the camel-cased version on rendering.</p>
-
+	(footer state)])))
+</code></pre><p>Ah, much better! Each HTML element is represented by a keyword at the beginning of a vector. Then, an optional map defines its attributes. Everything else must evaluate to another HTML element, and so on. All attributes match ClojureScript&rsquo;s default naming conventions and are automatically converted to the camel-cased version on rendering.</p>
 <p>To get started with sablono you just need to include its namespace and macro:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
+<pre><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
   (:require [...]
-            [sablono.core :as html :refer-macros [html]])</code></pre></div>
-<p>Note that by using sablono the compiled output grows from 192 KB    (47 KB gzipped) to  201 KB (48 KB gzipped).</p>
-
+            [sablono.core :as html :refer-macros [html]])
+</code></pre><p>Note that by using sablono the compiled output grows from 192 KB	(47 KB gzipped) to  201 KB (48 KB gzipped).</p>
 <h2 id="secretary">secretary</h2>
-
 <p>For the routing, meaning the mapping between application state and browser URL, we can use <a href="https://github.com/gf3/secretary">secretary</a> (great name, right?).</p>
-
 <p>When we look at the namespace declaration of <code>app.cljs</code> we can see the various items required for routing:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
+<pre><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
   (:require [...]
             [goog.events :as events]
             [secretary.core :as secretary :include-macros true :refer [defroute]])
   (:import  [goog History]
-            [goog.history EventType]))</code></pre></div>
-<p>That&rsquo;s quite a lot. Let&rsquo;s see what we have here:</p>
-
+            [goog.history EventType]))
+</code></pre><p>That&rsquo;s quite a lot. Let&rsquo;s see what we have here:</p>
 <ul>
 <li>from secretary, a macro called <code>defroute</code> and the namespace <code>secretary.core</code></li>
 <li>from Google Closure, the namespace <code>goog.events</code> as well as the elements <code>History</code> and <code>EventType</code> from <code>goog.history</code></li>
 </ul>
-
 <p>First, let&rsquo;s define the routing rules:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defroute &#34;/&#34;        []       (swap! app-state assoc :showing :all))
-(defroute &#34;/:filter&#34; [filter] (swap! app-state assoc :showing (keyword filter)))</code></pre></div>
-<p>There are two routes. When the first one matches, it sets the <code>:showing</code> entry of the application state to <code>all</code>. When the second one matches it sets it to the value of <code>filter</code>.</p>
-
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defroute &quot;/&quot;        []       (swap! app-state assoc :showing :all))
+(defroute &quot;/:filter&quot; [filter] (swap! app-state assoc :showing (keyword filter)))
+</code></pre><p>There are two routes. When the first one matches, it sets the <code>:showing</code> entry of the application state to <code>all</code>. When the second one matches it sets it to the value of <code>filter</code>.</p>
 <p>But how are the routes wired to the browser? That&rsquo;s where our modules from Google Closure come into play:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(def history (History.))
+<pre><code class="language-language-clojure" data-lang="language-clojure">(def history (History.))
 
 (events/listen history EventType.NAVIGATE
   (fn [e] (secretary/dispatch! (.-token e))))
 
-(.setEnabled history true)</code></pre></div>
-<p>A new instance of Google Closure&rsquo;s <code>History</code> is created, and a new event listener calls secretary&rsquo;s <code>dispatch!</code> function with the current history state (the event&rsquo;s <code>token</code> field) for each of its navigation events.</p>
-
+(.setEnabled history true)
+</code></pre><p>A new instance of Google Closure&rsquo;s <code>History</code> is created, and a new event listener calls secretary&rsquo;s <code>dispatch!</code> function with the current history state (the event&rsquo;s <code>token</code> field) for each of its navigation events.</p>
 <p><strong>Note</strong>: Since the <code>setEnabled</code> method fires an event for the current location immediately, it has to come after the event listener.</p>
-
 <p>The only place where the user can navigate to different URLs is the <code>footer component</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn footer [{:keys [todos] :as state}]
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defn footer [{:keys [todos] :as state}]
   (let [count (count (remove :completed todos))
-	    sel (-&gt; (zipmap [:all :active :completed] (repeat &#34;&#34;))
-                (assoc (:showing state) &#34;selected&#34;))]
+	    sel (-&gt; (zipmap [:all :active :completed] (repeat &quot;&quot;))
+                (assoc (:showing state) &quot;selected&quot;))]
 	(html
-	  [:footer {:id &#34;footer&#34; :style (hidden (empty? todos))}
-      [:span {:id &#34;todo-count&#34;}
+	  [:footer {:id &quot;footer&quot; :style (hidden (empty? todos))}
+      [:span {:id &quot;todo-count&quot;}
 	  	[:strong count]
-		(str &#34; &#34; (pluralize count &#34;item&#34;) &#34; left&#34;)]
-	  [:ul {:id &#34;filters&#34;}
-		[:li [:a {:href &#34;#/&#34; :class (sel :all)} &#34;All&#34;]]
-		[:li [:a {:href &#34;#/active&#34; :class (sel :active)} &#34;Active&#34;]]
-		[:li [:a {:href &#34;#/completed&#34; :class (sel :completed)} &#34;Completed&#34;]]]])))</code></pre></div>
-<p>We can see that there are three possible routing states: <code>all</code>, <code>active</code> and <code>completed</code>. For each state there is a hyperlink in the footer that triggers the corresponding route. Nothing more to it!</p>
-
+		(str &quot; &quot; (pluralize count &quot;item&quot;) &quot; left&quot;)]
+	  [:ul {:id &quot;filters&quot;}
+		[:li [:a {:href &quot;#/&quot; :class (sel :all)} &quot;All&quot;]]
+		[:li [:a {:href &quot;#/active&quot; :class (sel :active)} &quot;Active&quot;]]
+		[:li [:a {:href &quot;#/completed&quot; :class (sel :completed)} &quot;Completed&quot;]]]])))
+</code></pre><p>We can see that there are three possible routing states: <code>all</code>, <code>active</code> and <code>completed</code>. For each state there is a hyperlink in the footer that triggers the corresponding route. Nothing more to it!</p>
 <p>By the way, the original Om application from the last posts already included secretary. Compiled to JavaScript it was 192 KB (47 KB gzipped) but without any routing it shrinks to 172 KB (40 KB gzipped).</p>
-
 <h2 id="om-tools">om-tools</h2>
-
 <p>Prismatic is a very early adopter of Om and with <a href="https://github.com/Prismatic/om-tools">om-tools</a> they provide a collection of utilities to help eliminate a few annoyances and add extra functionality. To get started you need to include the namespace:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
+<pre><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
   (:require [...]
-  	      [om-tools.core :refer-macros [defcomponent]])</code></pre></div>
-<p>Here is how the <code>todo-item</code> component looked like until now:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defn todo-item [todo owner]
+  	      [om-tools.core :refer-macros [defcomponent]])
+</code></pre><p>Here is how the <code>todo-item</code> component looked like until now:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defn todo-item [todo owner]
   (reify
     om/IInitState
     (init-state [_]
@@ -175,49 +157,41 @@
     
     om/IRenderState
     (render-state [_ state]
-      ...)</code></pre></div>
-<p>That&rsquo;s a lot of boilerplate code! om-tools adds a new macro called <code>defcomponent</code> that brings simplicity to it:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defcomponent todo-item [todo owner]
+      ...)
+</code></pre><p>That&rsquo;s a lot of boilerplate code! om-tools adds a new macro called <code>defcomponent</code> that brings simplicity to it:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defcomponent todo-item [todo owner]
   (init-state [_]
 	...)
 
   (render-state [_ state]
-    ...)</code></pre></div>
-<p>It makes component definitions much smaller and easier to read.</p>
-
+    ...)
+</code></pre><p>It makes component definitions much smaller and easier to read.</p>
 <p>Another big feature is the integration of Prismatic&rsquo;s <a href="https://github.com/Prismatic/schema">schema</a> library which allows declarative data description and validation. I could write an entire blog post about it but luckily <a href="http://blog.getprismatic.com/schema-0-2-0-back-with-clojurescript-data-coercion/">Prismatic already did</a>. So I&rsquo;ll just highlight how this works in our little TodoMVC application. First, we need to include the <code>schema</code> library:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
+<pre><code class="language-language-clojure" data-lang="language-clojure">(ns todomvc.app
   (:require [...]
-  	      [om-tools.core :refer-macros [defcomponent]])</code></pre></div>
-<p>Then we define a schema for a Todo:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(def Todo
+  	      [om-tools.core :refer-macros [defcomponent]])
+</code></pre><p>Then we define a schema for a Todo:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">(def Todo
 	{:id s/Str
 	 :title s/Str
-	 :completed s/Bool})</code></pre></div>
-<p>It&rsquo;s pretty self-explanatory so far. Now we can add the schema to Om component parameters:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defcomponent todo-item [todo :- Todo owner]
-   ...</code></pre></div>
-<p>The <code>:- Todo</code> connects the parameter to the schema. Now, in theory, when the component is created the parameter is validated. But before that we need to enable the validation:</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(s/with-fn-validation
+	 :completed s/Bool})
+</code></pre><p>It&rsquo;s pretty self-explanatory so far. Now we can add the schema to Om component parameters:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defcomponent todo-item [todo :- Todo owner]
+   ...
+</code></pre><p>The <code> :- Todo</code> connects the parameter to the schema. Now, in theory, when the component is created the parameter is validated. But before that we need to enable the validation:</p>
+<pre><code class="language-language-clojure" data-lang="language-clojure">(s/with-fn-validation
   (om/root todo-app app-state
-	{:target (.getElementById js/document &#34;todoapp&#34;)}))</code></pre></div>
-<p>Unfortunately, when I tried this it didn&rsquo;t work. I haven&rsquo;t found out the reason for this yet but it may be because the component is created via <code>build-all</code>. Not sure. But the <a href="https://github.com/Prismatic/om-tools/tree/master/examples/sliders">om-tools example</a> actually works, so go on over there to see it in action.</p>
-
+	{:target (.getElementById js/document &quot;todoapp&quot;)}))
+</code></pre><p>Unfortunately, when I tried this it didn&rsquo;t work. I haven&rsquo;t found out the reason for this yet but it may be because the component is created via <code>build-all</code>. Not sure. But the <a href="https://github.com/Prismatic/om-tools/tree/master/examples/sliders">om-tools example</a> actually works, so go on over there to see it in action.</p>
 <p>Anyway, to get what we came here for: let&rsquo;s validate the schema explicitly.</p>
-<div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(defcomponent todo-item [todo :- Todo owner]
+<pre><code class="language-language-clojure" data-lang="language-clojure">(defcomponent todo-item [todo :- Todo owner]
   (init-state [_]
-	(s/validate Todo todo)</code></pre></div>
-<p>Now, when we create a new Todo with the field <code>completd</code> it results in an error once the <code>todo-item</code> component is created:</p>
-
+	(s/validate Todo todo)
+</code></pre><p>Now, when we create a new Todo with the field <code>completd</code> it results in an error once the <code>todo-item</code> component is created:</p>
 <pre><code>Uncaught Error: Value does not match schema: {:completed missing-required-key, :completd disallowed-key}
-</code></pre>
-
-<p>This means we can catch errors earlier and prevent some of those subtle bugs we all know and love from dynamic languages. All the improvements come at a price, though: the resulting JavaScript code adds up to 264 KB (61 KB gzipped) now.</p>
-
+</code></pre><p>This means we can catch errors earlier and prevent some of those subtle bugs we all know and love from dynamic languages. All the improvements come at a price, though: the resulting JavaScript code adds up to 264 KB (61 KB gzipped) now.</p>
 <p>There are a few other things the library brings to the table - like mixins - so make sure to look into the <a href="https://github.com/Prismatic/om-tools">documentation</a>.</p>
-
-<hr />
-
+<hr>
 <p>That&rsquo;s it for today. You have seen how a few libraries can help you get even more value out of Om.</p>
 
 
@@ -331,7 +305,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-08-13 19:28:05.485019 -0700 PDT m=&#43;0.293823368">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:32:55.380975 -0700 PDT m=&#43;0.113760347">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
