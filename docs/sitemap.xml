@@ -33,12 +33,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/toronto/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/toronto/</loc>
     <lastmod>2017-11-11T17:54:31+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/toronto/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/toronto/</loc>
     <lastmod>2017-11-11T17:54:31+00:00</lastmod>
   </url>
   
@@ -93,12 +93,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/google/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/google/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/google/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/google/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
   </url>
   
@@ -123,12 +123,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/go/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/go/</loc>
     <lastmod>2016-08-07T15:43:23+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/go/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/go/</loc>
     <lastmod>2016-08-07T15:43:23+00:00</lastmod>
   </url>
   
@@ -138,12 +138,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/babel/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/babel/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/babel/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/babel/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
@@ -158,12 +158,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/javascript/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/javascript/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/javascript/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/javascript/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
   </url>
   
@@ -223,17 +223,12 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/schema/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.stephanbehnke.com/categories/schema/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/secretary/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/schema/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
@@ -243,7 +238,7 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/todomvc/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/secretary/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
@@ -253,13 +248,13 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/zero-to-om-6/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/todomvc/</loc>
     <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/cljsbuild/</loc>
-    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+    <loc>https://blog.stephanbehnke.com/zero-to-om-6/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -268,7 +263,7 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/google-closure/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/cljsbuild/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
@@ -278,7 +273,7 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/leiningen/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/google-closure/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
@@ -288,13 +283,13 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/zero-to-om-act-5/</loc>
+    <loc>https://blog.stephanbehnke.com/tags/leiningen/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/core.async/</loc>
-    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
+    <loc>https://blog.stephanbehnke.com/zero-to-om-act-5/</loc>
+    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
   </url>
   
   <url>
@@ -303,12 +298,17 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/cursors/</loc>
+    <loc>https://blog.stephanbehnke.com/categories/core.async/</loc>
     <lastmod>2014-09-18T08:57:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.stephanbehnke.com/tags/cursors/</loc>
+    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/cursors/</loc>
     <lastmod>2014-09-18T08:57:00+00:00</lastmod>
   </url>
   
