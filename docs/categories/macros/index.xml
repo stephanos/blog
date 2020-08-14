@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Macros on This Programming Life</title>
+    <title>macros on This Programming Life</title>
     <link>https://blog.stephanbehnke.com/categories/macros/</link>
-    <description>Recent content in Macros on This Programming Life</description>
+    <description>Recent content in macros on This Programming Life</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 28 Jan 2013 11:00:00 +0000</lastBuildDate>

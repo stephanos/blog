@@ -3,7 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.stephanbehnke.com/categories/</loc>
+    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.stephanbehnke.com/how-i-learned-to-stop-worrying-and-love-the-job-hunt-in-toronto/</loc>
+    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/job/</loc>
+    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/job/</loc>
+    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/</loc>
+    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/</loc>
+    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/toronto/</loc>
+    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/toronto/</loc>
     <lastmod>2017-11-11T17:54:31+00:00</lastmod>
   </url>
   
@@ -13,8 +48,88 @@
   </url>
   
   <url>
+    <loc>https://blog.stephanbehnke.com/tags/startup/</loc>
+    <lastmod>2017-04-10T21:06:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/startup/</loc>
+    <lastmod>2017-04-10T21:06:39+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.stephanbehnke.com/3-years-on-google-app-engine-an-epic-review/</loc>
     <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/app-engine/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/app-engine/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/cloud/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/cloud/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/datastore/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/datastore/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/google/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/google/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/hosting/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/hosting/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/java/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/java/</loc>
+    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/go/</loc>
+    <lastmod>2016-08-07T15:43:23+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/go/</loc>
+    <lastmod>2016-08-07T15:43:23+00:00</lastmod>
   </url>
   
   <url>
@@ -23,8 +138,118 @@
   </url>
   
   <url>
+    <loc>https://blog.stephanbehnke.com/tags/babel/</loc>
+    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/babel/</loc>
+    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/flow/</loc>
+    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/flow/</loc>
+    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/javascript/</loc>
+    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/javascript/</loc>
+    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.stephanbehnke.com/hunt-for-immutable-type-safe-record-in-javascript/</loc>
     <lastmod>2016-03-06T15:29:39+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/client-side/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/client-side/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/om/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/om/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/om-tools/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/om-tools/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/react.js/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/react.js/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/sablono/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/sablono/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/schema/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/schema/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/secretary/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/secretary/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/todomvc/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/todomvc/</loc>
+    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -33,8 +258,58 @@
   </url>
   
   <url>
+    <loc>https://blog.stephanbehnke.com/tags/cljsbuild/</loc>
+    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/cljsbuild/</loc>
+    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/google-closure/</loc>
+    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/google-closure/</loc>
+    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/leiningen/</loc>
+    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/leiningen/</loc>
+    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.stephanbehnke.com/zero-to-om-act-5/</loc>
     <lastmod>2014-09-25T12:51:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/core.async/</loc>
+    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/core.async/</loc>
+    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/cursors/</loc>
+    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/tags/cursors/</loc>
+    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
   </url>
   
   <url>
@@ -53,6 +328,16 @@
   </url>
   
   <url>
+    <loc>https://blog.stephanbehnke.com/tags/build-tool/</loc>
+    <lastmod>2014-08-25T15:41:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.stephanbehnke.com/categories/build-tool/</loc>
+    <lastmod>2014-08-25T15:41:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.stephanbehnke.com/zero-to-om/</loc>
     <lastmod>2014-08-25T15:41:00+00:00</lastmod>
   </url>
@@ -63,374 +348,28 @@
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/scala-macros-use-case-teaching-scala/</loc>
-    <lastmod>2013-01-28T11:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/app-engine/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/app-engine/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/babel/</loc>
-    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/babel/</loc>
-    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/build-tool/</loc>
-    <lastmod>2014-08-25T15:41:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/build-tool/</loc>
-    <lastmod>2014-08-25T15:41:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/client-side/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/client-side/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/cljsbuild/</loc>
-    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/cljsbuild/</loc>
-    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/cloud/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/cloud/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/core.async/</loc>
-    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/core.async/</loc>
-    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/cursors/</loc>
-    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/cursors/</loc>
-    <lastmod>2014-09-18T08:57:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/datastore/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/datastore/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/flow/</loc>
-    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/flow/</loc>
-    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/go/</loc>
-    <lastmod>2016-08-07T15:43:23+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/go/</loc>
-    <lastmod>2016-08-07T15:43:23+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/google/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/google/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/google-closure/</loc>
-    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/google-closure/</loc>
-    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/hosting/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/hosting/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/java/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/java/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/javascript/</loc>
-    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/javascript/</loc>
-    <lastmod>2016-03-06T15:29:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/job/</loc>
-    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/job/</loc>
-    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/leiningen/</loc>
-    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/leiningen/</loc>
-    <lastmod>2014-09-25T12:51:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.stephanbehnke.com/tags/macros/</loc>
     <lastmod>2013-01-28T11:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.stephanbehnke.com/categories/macros/</loc>
     <lastmod>2013-01-28T11:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/om/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/om/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/om-tools/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/om-tools/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/react.js/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/react.js/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/sablono/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/sablono/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/scala/</loc>
-    <lastmod>2013-01-28T11:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.stephanbehnke.com/categories/scala/</loc>
     <lastmod>2013-01-28T11:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/tags/schema/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>https://blog.stephanbehnke.com/tags/scala/</loc>
+    <lastmod>2013-01-28T11:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.stephanbehnke.com/categories/schema/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/secretary/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/secretary/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/startup/</loc>
-    <lastmod>2017-04-10T21:06:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/startup/</loc>
-    <lastmod>2017-04-10T21:06:39+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/</loc>
-    <lastmod>2017-03-13T15:23:59+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/</loc>
-    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/todomvc/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/todomvc/</loc>
-    <lastmod>2014-11-09T18:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/tags/toronto/</loc>
-    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.stephanbehnke.com/categories/toronto/</loc>
-    <lastmod>2017-11-11T17:54:31+00:00</lastmod>
-    <priority>0</priority>
+    <loc>https://blog.stephanbehnke.com/scala-macros-use-case-teaching-scala/</loc>
+    <lastmod>2013-01-28T11:00:00+00:00</lastmod>
   </url>
   
 </urlset>

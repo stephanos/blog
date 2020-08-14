@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Client Side on This Programming Life</title>
+    <title>client-side on This Programming Life</title>
     <link>https://blog.stephanbehnke.com/tags/client-side/</link>
-    <description>Recent content in Client Side on This Programming Life</description>
+    <description>Recent content in client-side on This Programming Life</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 09 Nov 2014 18:00:00 +0000</lastBuildDate>

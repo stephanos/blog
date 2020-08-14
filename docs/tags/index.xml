@@ -6,157 +6,13 @@
     <description>Recent content in Tags on This Programming Life</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Mar 2017 15:23:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Nov 2017 17:54:31 +0000</lastBuildDate>
     
 	<atom:link href="https://blog.stephanbehnke.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>App Engine</title>
-      <link>https://blog.stephanbehnke.com/tags/app-engine/</link>
-      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/app-engine/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Babel</title>
-      <link>https://blog.stephanbehnke.com/tags/babel/</link>
-      <pubDate>Sun, 06 Mar 2016 15:29:39 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/babel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Build Tool</title>
-      <link>https://blog.stephanbehnke.com/tags/build-tool/</link>
-      <pubDate>Mon, 25 Aug 2014 15:41:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/build-tool/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Client Side</title>
-      <link>https://blog.stephanbehnke.com/tags/client-side/</link>
-      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/client-side/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cljsbuild</title>
-      <link>https://blog.stephanbehnke.com/tags/cljsbuild/</link>
-      <pubDate>Thu, 25 Sep 2014 12:51:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/cljsbuild/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cloud</title>
-      <link>https://blog.stephanbehnke.com/tags/cloud/</link>
-      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/cloud/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Core.async</title>
-      <link>https://blog.stephanbehnke.com/tags/core.async/</link>
-      <pubDate>Thu, 18 Sep 2014 08:57:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/core.async/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cursors</title>
-      <link>https://blog.stephanbehnke.com/tags/cursors/</link>
-      <pubDate>Thu, 18 Sep 2014 08:57:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/cursors/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Datastore</title>
-      <link>https://blog.stephanbehnke.com/tags/datastore/</link>
-      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/datastore/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Flow</title>
-      <link>https://blog.stephanbehnke.com/tags/flow/</link>
-      <pubDate>Sun, 06 Mar 2016 15:29:39 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/flow/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Go</title>
-      <link>https://blog.stephanbehnke.com/tags/go/</link>
-      <pubDate>Sun, 07 Aug 2016 15:43:23 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Google</title>
-      <link>https://blog.stephanbehnke.com/tags/google/</link>
-      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/google/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Google Closure</title>
-      <link>https://blog.stephanbehnke.com/tags/google-closure/</link>
-      <pubDate>Thu, 25 Sep 2014 12:51:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/google-closure/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Hosting</title>
-      <link>https://blog.stephanbehnke.com/tags/hosting/</link>
-      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/hosting/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Java</title>
-      <link>https://blog.stephanbehnke.com/tags/java/</link>
-      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/java/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Javascript</title>
-      <link>https://blog.stephanbehnke.com/tags/javascript/</link>
-      <pubDate>Sun, 06 Mar 2016 15:29:39 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/javascript/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Job</title>
+      <title>job</title>
       <link>https://blog.stephanbehnke.com/tags/job/</link>
       <pubDate>Sat, 11 Nov 2017 17:54:31 +0000</pubDate>
       
@@ -165,88 +21,16 @@
     </item>
     
     <item>
-      <title>Leiningen</title>
-      <link>https://blog.stephanbehnke.com/tags/leiningen/</link>
-      <pubDate>Thu, 25 Sep 2014 12:51:00 +0000</pubDate>
+      <title>toronto</title>
+      <link>https://blog.stephanbehnke.com/tags/toronto/</link>
+      <pubDate>Sat, 11 Nov 2017 17:54:31 +0000</pubDate>
       
-      <guid>https://blog.stephanbehnke.com/tags/leiningen/</guid>
+      <guid>https://blog.stephanbehnke.com/tags/toronto/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Macros</title>
-      <link>https://blog.stephanbehnke.com/tags/macros/</link>
-      <pubDate>Mon, 28 Jan 2013 11:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/macros/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Om</title>
-      <link>https://blog.stephanbehnke.com/tags/om/</link>
-      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/om/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Om Tools</title>
-      <link>https://blog.stephanbehnke.com/tags/om-tools/</link>
-      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/om-tools/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>React.js</title>
-      <link>https://blog.stephanbehnke.com/tags/react.js/</link>
-      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/react.js/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Sablono</title>
-      <link>https://blog.stephanbehnke.com/tags/sablono/</link>
-      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/sablono/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Scala</title>
-      <link>https://blog.stephanbehnke.com/tags/scala/</link>
-      <pubDate>Mon, 28 Jan 2013 11:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/scala/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Schema</title>
-      <link>https://blog.stephanbehnke.com/tags/schema/</link>
-      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/schema/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Secretary</title>
-      <link>https://blog.stephanbehnke.com/tags/secretary/</link>
-      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
-      
-      <guid>https://blog.stephanbehnke.com/tags/secretary/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Startup</title>
+      <title>startup</title>
       <link>https://blog.stephanbehnke.com/tags/startup/</link>
       <pubDate>Mon, 10 Apr 2017 21:06:39 +0000</pubDate>
       
@@ -255,7 +39,160 @@
     </item>
     
     <item>
-      <title>Todomvc</title>
+      <title>app-engine</title>
+      <link>https://blog.stephanbehnke.com/tags/app-engine/</link>
+      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/app-engine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud</title>
+      <link>https://blog.stephanbehnke.com/tags/cloud/</link>
+      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>datastore</title>
+      <link>https://blog.stephanbehnke.com/tags/datastore/</link>
+      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/datastore/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>google</title>
+      <link>https://blog.stephanbehnke.com/tags/google/</link>
+      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/google/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hosting</title>
+      <link>https://blog.stephanbehnke.com/tags/hosting/</link>
+      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/hosting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>java</title>
+      <link>https://blog.stephanbehnke.com/tags/java/</link>
+      <pubDate>Mon, 13 Mar 2017 15:23:59 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go</title>
+      <link>https://blog.stephanbehnke.com/tags/go/</link>
+      <pubDate>Sun, 07 Aug 2016 15:43:23 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>babel</title>
+      <link>https://blog.stephanbehnke.com/tags/babel/</link>
+      <pubDate>Sun, 06 Mar 2016 15:29:39 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/babel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flow</title>
+      <link>https://blog.stephanbehnke.com/tags/flow/</link>
+      <pubDate>Sun, 06 Mar 2016 15:29:39 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/flow/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>javascript</title>
+      <link>https://blog.stephanbehnke.com/tags/javascript/</link>
+      <pubDate>Sun, 06 Mar 2016 15:29:39 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>client-side</title>
+      <link>https://blog.stephanbehnke.com/tags/client-side/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/client-side/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>om</title>
+      <link>https://blog.stephanbehnke.com/tags/om/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/om/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>om-tools</title>
+      <link>https://blog.stephanbehnke.com/tags/om-tools/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/om-tools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>react.js</title>
+      <link>https://blog.stephanbehnke.com/tags/react.js/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/react.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sablono</title>
+      <link>https://blog.stephanbehnke.com/tags/sablono/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/sablono/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>schema</title>
+      <link>https://blog.stephanbehnke.com/tags/schema/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/schema/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>secretary</title>
+      <link>https://blog.stephanbehnke.com/tags/secretary/</link>
+      <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/secretary/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>todomvc</title>
       <link>https://blog.stephanbehnke.com/tags/todomvc/</link>
       <pubDate>Sun, 09 Nov 2014 18:00:00 +0000</pubDate>
       
@@ -264,11 +201,74 @@
     </item>
     
     <item>
-      <title>Toronto</title>
-      <link>https://blog.stephanbehnke.com/tags/toronto/</link>
-      <pubDate>Sat, 11 Nov 2017 17:54:31 +0000</pubDate>
+      <title>cljsbuild</title>
+      <link>https://blog.stephanbehnke.com/tags/cljsbuild/</link>
+      <pubDate>Thu, 25 Sep 2014 12:51:00 +0000</pubDate>
       
-      <guid>https://blog.stephanbehnke.com/tags/toronto/</guid>
+      <guid>https://blog.stephanbehnke.com/tags/cljsbuild/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>google closure</title>
+      <link>https://blog.stephanbehnke.com/tags/google-closure/</link>
+      <pubDate>Thu, 25 Sep 2014 12:51:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/google-closure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>leiningen</title>
+      <link>https://blog.stephanbehnke.com/tags/leiningen/</link>
+      <pubDate>Thu, 25 Sep 2014 12:51:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/leiningen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>core.async</title>
+      <link>https://blog.stephanbehnke.com/tags/core.async/</link>
+      <pubDate>Thu, 18 Sep 2014 08:57:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/core.async/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cursors</title>
+      <link>https://blog.stephanbehnke.com/tags/cursors/</link>
+      <pubDate>Thu, 18 Sep 2014 08:57:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/cursors/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>build tool</title>
+      <link>https://blog.stephanbehnke.com/tags/build-tool/</link>
+      <pubDate>Mon, 25 Aug 2014 15:41:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/build-tool/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>macros</title>
+      <link>https://blog.stephanbehnke.com/tags/macros/</link>
+      <pubDate>Mon, 28 Jan 2013 11:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/macros/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scala</title>
+      <link>https://blog.stephanbehnke.com/tags/scala/</link>
+      <pubDate>Mon, 28 Jan 2013 11:00:00 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/tags/scala/</guid>
       <description></description>
     </item>
     

@@ -3,24 +3,21 @@
     <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-		<title>
-				Zero to Om - Act 3 &middot; This Programming Life
-		</title>
-	
+
+		<title>Zero to Om - Act 3 &middot; This Programming Life</title>
+
 		
   		<link rel="stylesheet" href="/css/style.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-	
+		<link rel="stylesheet" href="/css/fonts.css">
 		
 		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-	
+
 		
 		<link href="" rel="alternate" type="application/rss+xml" title="This Programming Life" />
 	</head>
-	
+
     <body>
         		<nav class="nav">
 			<div class="nav-container">
@@ -28,8 +25,8 @@
 					<h2 class="nav-title">This Programming Life</h2>
 				</a>
 				<ul>
-    <li><a href="/about">About</a></li>
-    <li><a href="/">Posts</a></li>
+    
+    
 </ul>
 			</div>
 		</nav>
@@ -111,12 +108,14 @@
 <ul>
 <li>(a) what to render,</li>
 <li>(b) what our state is,</li>
-<li>&copy; and where to hook into the DOM.</li>
-</ul>
+
+<li><p>&copy; and where to hook into the DOM.</p>
 <div class="highlight"><pre class="chroma"><code class="language-language-clojure" data-lang="language-clojure">(om/root 
-  todo-app                                           ;; (a)
-  app-state                                          ;; (b)
-  {:target (.getElementById js/document &#34;todoapp&#34;)}) ;; (c)</code></pre></div>
+todo-app                                           ;; (a)
+app-state                                          ;; (b)
+{:target (.getElementById js/document &#34;todoapp&#34;)}) ;; (c)</code></pre></div></li>
+</ul>
+
 <p>Om will take it from here. It starts a rendering loop and when the state changes it will update the components in a single batch (<em>very</em> efficiently by leveraging the browser&rsquo;s <a href="http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/">requestAnimationFrame</a>).</p>
 
 <p>Now to the burning question: What is <code>todo-app</code> ?</p>
@@ -365,7 +364,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-02-23 14:40:31.646191 -0800 PST m=&#43;0.209117051">2019</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-08-13 19:14:04.749597 -0700 PDT m=&#43;0.290142295">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
