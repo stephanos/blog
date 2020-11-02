@@ -140,6 +140,8 @@ end
 
 By following this approach, we keep our production code completely free of testing concerns and the test can still be run concurrently!
 
+You can use it with any mocking library, not just `mox`. Or just stubs you defined yourself. It only cares about dependency injection.
+
 ## Ehm, But How Does it Work?
 
 `rewire` is a macro, imported via `import Rewire`.
