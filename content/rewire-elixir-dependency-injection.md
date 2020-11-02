@@ -164,7 +164,7 @@ You might wonder how it generates a new module from the original one. The librar
 
 As far as I know, the only situation where you cannot use `rewire` to inject your dependencies is when you are dealing with a process that has been started _before_ your test.
 
-Take for example a [Phoenix](https://www.phoenixframework.org/) controller test. Since you'll be writing tests against the server (using `ConnCase`), any dependency in the controller cannot be rewired after the fact.
+Take for example a [Phoenix](https://www.phoenixframework.org/) controller test. Since you'll be writing tests against the server (using `ConnCase`), a dependency in the controller cannot be rewired after the fact.
 
 ## La Fin
 
