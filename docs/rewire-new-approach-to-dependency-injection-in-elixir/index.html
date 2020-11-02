@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Rewire: A new Approach to Dependency Injection in Elixir &middot; This Programming Life</title>
+
+  
+    <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/fonts.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="This Programming Life" />
+
+  <script>(function(c,a){if(!a.__SV){var b=window;try{var d,m,j,k=b.location,f=k.hash;d=function(a,b){return(m=a.match(RegExp(b+"=([^&]*)")))?m[1]:null};f&&d(f,"state")&&(j=JSON.parse(decodeURIComponent(d(f,"state"))),"mpeditor"===j.action&&(b.sessionStorage.setItem("_mpcehash",f),history.replaceState(j.desiredHash||"",c.title,k.pathname+k.search)))}catch(n){}var l,h;window.mixpanel=a;a._i=[];a.init=function(b,d,g){function c(b,i){var a=i.split(".");2==a.length&&(b=b[a[0]],i=a[1]);b[i]=function(){b.push([i].concat(Array.prototype.slice.call(arguments,
+    0)))}}var e=a;"undefined"!==typeof g?e=a[g]=[]:g="mixpanel";e.people=e.people||[];e.toString=function(b){var a="mixpanel";"mixpanel"!==g&&(a+="."+g);b||(a+=" (stub)");return a};e.people.toString=function(){return e.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
+    for(h=0;h<l.length;h++)c(e,l[h]);var f="set set_once union unset remove delete".split(" ");e.get_group=function(){function a(c){b[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));e.push([d,call2])}}for(var b={},d=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<f.length;c++)a(f[c]);return b};a._i.push([b,d,g])};a.__SV=1.2;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
+    MIXPANEL_CUSTOM_LIB_URL:"file:"===c.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d)}})(document,window.mixpanel||[]);
+    mixpanel.init("a7196909c977ea84ee1e074341a165b1", {batch_requests: true})</script>
+</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">This Programming Life</h2>
+				</a>
+				<ul>
+    
+    
+</ul>
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Stephan Behnke
+        <br>
+        <span>on&nbsp;</span><time datetime="2020-10-30 00:38:50 &#43;0000 UTC">October 30, 2020</time>
+</div>
+		<h1 class="post-title">Rewire: A new Approach to Dependency Injection in Elixir</h1>
+<div class="post-line"></div>
+
+		<style>
+  main {
+    max-width: 650px;
+  }
+
+  .post h2 {
+    font-size: 2rem;
+    margin: 1.5em 0 0.5em 0;
+  }
+
+  .post p, .post li {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+
+  .nav-container ul {
+    display: none;
+  }
+</style>
+
+
+		<p>I&rsquo;ve been working with Elixir for 3 years full-time now and while I think it&rsquo;s an exceptional language and development environment, the testing story always felt incomplete to me. Something was missing. In this post, I&rsquo;ll explain what that is and how I attempted to fix it.</p>
+<h2 id="injecting-mocks">Injecting Mocks</h2>
+<p>While I strive to minimize the use of mocks, I find they are still quite useful in certain situations.</p>
+<p>Before Elixir, I&rsquo;ve mainly worked with Java. For better or worse, in Java you have a multitude of options to inject dependencies into your classes. Most notably, <code>@Autowired</code> that allows you to simply override annotated fields during testing with your mock. Could not be simpler.</p>
+<p>In Elixir things are a little different. That&rsquo;s because Elixir does not have classes or class fields. Modules are <em>stateless</em>. So how does one inject a dependency in Elixir?</p>
+<p>Let&rsquo;s look at this simplified example and explore our options:</p>
+<div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Conversation</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">start</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">English</span><span class="o">.</span><span class="n">greet</span><span class="p">()</span>
+<span class="n">end</span>
+</code></pre></div><h2 id="-function-arguments">🛑 Function Arguments</h2>
+<p>The easiest approach does not require any libraries: passing-in dependencies using the function arguments.</p>
+<div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Conversation</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">start</span><span class="p">(</span><span class="n">lang_mod</span> <span class="p">\\</span> <span class="nc">English</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">lang_mod</span><span class="o">.</span><span class="n">greet</span><span class="p">()</span>
+<span class="n">end</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyTest</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="n">false</span>
+
+  <span class="n">test</span> <span class="s2">&#34;start/0&#34;</span> <span class="n">do</span>
+    <span class="n">defmodule</span> <span class="nc">EnglishMock</span> <span class="n">do</span>
+      <span class="n">def</span> <span class="n">greet</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;g&#39;day&#34;</span>
+    <span class="n">end</span>
+    <span class="n">assert</span> <span class="nc">Conversation</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="nc">EnglishMock</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&#34;g&#39;day&#34;</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</code></pre></div><p>While many (including myself) find this to look &ldquo;odd&rdquo; at first, it is admittedly easy to do.</p>
+<p>However, it comes with quite a few drawbacks:</p>
+<ol>
+<li>Your application code is now littered with testing concerns.</li>
+<li>Navigation in your code editor doesn&rsquo;t work as well.</li>
+<li>Searches for usages of the module are more difficult.</li>
+<li>The compiler is not able to warn you in case <code>greet/0</code> doesn&rsquo;t exist on the <code>English</code> module.</li>
+</ol>
+<h2 id="-global-override">🛑 Global Override</h2>
+<p>The Elixir library <a href="https://hex.pm/packages/mock">mock</a> (wrapping the Erlang library <a href="https://hex.pm/packages/meck">meck</a> under the hood) allows overriding any module globally.</p>
+<div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyTest</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="n">false</span>   <span class="c1"># not concurrently!</span>
+
+  <span class="n">import</span> <span class="nc">Mock</span>
+
+  <span class="n">test</span> <span class="s2">&#34;start/0&#34;</span> <span class="n">do</span>
+    <span class="n">with_mock</span> <span class="nc">English</span><span class="p">,</span> <span class="p">[</span><span class="ss">greet</span><span class="p">:</span> <span class="n">fn</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="s2">&#34;g&#39;day&#34;</span> <span class="n">end</span><span class="p">]</span> <span class="n">do</span>
+      <span class="n">assert</span> <span class="nc">Conversation</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;g&#39;day&#34;</span>
+    <span class="n">end</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</code></pre></div><p>Here the <code>English</code> module is temporarily replaced with a mock that stubs out the <code>greet</code> function. So far so good - but it comes with a cost. One of ExUnit&rsquo;s most valuable features is the ability to run tests <em>concurrently</em>. However, to stub out modules <em>globally</em> we have to exempt this test module from being run concurrently (notice the <code>async: false</code>). This might seem like a small price to pay but if your application grows you might soon find yourself with a slow test suite. This can easily be avoided!</p>
+<h2 id="-configuration-lookup">🛑 Configuration Lookup</h2>
+<p>The more or less official mocking library for Elixir is <a href="https://hex.pm/packages/mox">mox</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="c1"># in test_helper.exs</span>
+<span class="nc">Mox</span><span class="o">.</span><span class="n">defmock</span><span class="p">(</span><span class="nc">EnglishMock</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">English</span><span class="p">)</span>
+<span class="nc">Application</span><span class="o">.</span><span class="n">put_env</span><span class="p">(</span><span class="ss">:myapp</span><span class="p">,</span> <span class="ss">:english</span><span class="p">,</span> <span class="nc">EnglishMock</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Conversation</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">start</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">english</span><span class="p">()</span><span class="o">.</span><span class="n">greet</span><span class="p">()</span>
+  <span class="n">defp</span> <span class="n">english</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">Application</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="ss">:myapp</span><span class="p">,</span> <span class="ss">:english</span><span class="p">,</span> <span class="nc">English</span><span class="p">)</span>
+<span class="n">end</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyTest</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="n">true</span>  <span class="c1"># concurrently!</span>
+
+  <span class="n">import</span> <span class="nc">Mox</span>
+
+  <span class="n">test</span> <span class="s2">&#34;start/0&#34;</span> <span class="n">do</span>
+    <span class="n">stub</span><span class="p">(</span><span class="nc">English</span><span class="p">,</span> <span class="ss">:greet</span><span class="p">,</span> <span class="n">fn</span> <span class="o">-&gt;</span> <span class="s2">&#34;g&#39;day&#34;</span> <span class="n">end</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="nc">Conversation</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;g&#39;day&#34;</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</code></pre></div><p><code>mox</code> provides a mock that is &ldquo;injected&rdquo; into the module under test by doing a lookup in the app&rsquo;s configuration.</p>
+<p>The advantage is that the &ldquo;odd&rdquo; function parameter is gone, but all of the other issues are still there. But at least it can be run concurrently since the mock is set up <em>per process</em> (and each test module is its own process in ExUnit).</p>
+<h2 id="-rewire">🎉 rewire</h2>
+<p>I wasn&rsquo;t satisfied with any of these options. So I experimented a little with Elixir metaprogramming and the result was <a href="https://hex.pm/packages/rewire">rewire</a>.</p>
+<p>It focuses purely on dependency injection and can be used with any mocking library, like <code>mox</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="c1"># in test_helper.exs</span>
+<span class="nc">Mox</span><span class="o">.</span><span class="n">defmock</span><span class="p">(</span><span class="nc">EnglishMock</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">English</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyTest</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="n">true</span>  <span class="c1"># concurrently!</span>
+
+  <span class="n">import</span> <span class="nc">Rewire</span>
+  <span class="n">import</span> <span class="nc">Mox</span>
+
+  <span class="n">rewire</span> <span class="nc">Conversation</span><span class="p">,</span> <span class="ss">English</span><span class="p">:</span> <span class="nc">EnglishMock</span>  <span class="c1"># inject!</span>
+
+  <span class="n">test</span> <span class="s2">&#34;start/0&#34;</span> <span class="n">do</span>
+    <span class="n">stub</span><span class="p">(</span><span class="nc">EnglishMock</span><span class="p">,</span> <span class="ss">:greet</span><span class="p">,</span> <span class="n">fn</span> <span class="o">-&gt;</span> <span class="s2">&#34;g&#39;day&#34;</span> <span class="n">end</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="nc">Conversation</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;g&#39;day&#34;</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</code></pre></div><p>By following this approach, we keep our production code completely free of testing concerns and the test can still be run concurrently!</p>
+<h2 id="ehm-but-how-does-it-work">Ehm, But How Does it Work?</h2>
+<p><code>rewire</code> is a macro, imported via <code>import Rewire</code>.</p>
+<p>Let&rsquo;s look at what code the macro generated here:</p>
+<div class="highlight"><pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Conversation.R518</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">start</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">EnglishMock</span><span class="o">.</span><span class="n">greet</span><span class="p">()</span>
+<span class="n">end</span>
+
+<span class="n">alias</span> <span class="nc">Conversation.R518</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="nc">Conversation</span>
+</code></pre></div><p>First, it generates a <em>copy</em> of the original module with the <code>English</code> reference <em>replaced</em> by <code>EnglishMock</code>. You might also notice that the module name has changed. Since the module might be rewired in multiple places, this is supposed to prevent naming collisions.</p>
+<p>Then, it adds an alias to the rewired module under the <em>original</em> name.</p>
+<p>You might wonder how it generates a new module from the original one. The library finds the module&rsquo;s source file path by calling <code>module_info</code>, parses the code into an AST with <code>Code.string_to_quoted</code>, traverses the AST to replace any rewired dependencies using <code>Macro.traverse</code> and evaluates the result with <code>Code.eval_quoted</code>. Check out the <a href="https://github.com/stephanos/rewire/blob/master/lib/rewire">source code</a> for details.</p>
+<h2 id="limitation">Limitation</h2>
+<p>As far as I know, the only situation where you cannot use <code>rewire</code> to inject your dependencies is when you are dealing with a process that has been started <em>before</em> your test.</p>
+<p>Take for example a <a href="https://www.phoenixframework.org/">Phoenix</a> controller test. Since you&rsquo;ll be writing tests against the server (using <code>ConnCase</code>), any dependency in the controller cannot be rewired after the fact.</p>
+<h2 id="la-fin">La Fin</h2>
+<p>I hope you enjoyed this blog post. If you have any questions or feedback, please leave a comment. And if you&rsquo;re curious, try out <a href="https://hex.pm/packages/rewire">rewire</a> yourself.</p>
+
+
+		<style>
+  footer {
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .post-footer {
+    position: relative;
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: #EBF2F6 1px solid;
+  }
+
+  .author-image {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 44%;
+    margin: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    overflow: hidden;
+    padding: 6px;
+    background: #fff;
+    z-index: 2;
+    box-shadow: #E7EEF2 0 0 0 1px;
+  }
+
+  .author-image .img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 100%;
+  }
+
+  .post-footer h4 {
+    font-size: 1rem;
+  }
+
+  .post-footer p {
+    margin: 1rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .separator {
+    border-top: 0.5px solid #e5e5e5;
+    padding-top: 4rem;
+  }
+</style>
+
+<footer class="post-footer">
+
+  <figure class="author-image">
+    <a class="img" href="#" style="background-image: url(/images/2014/Aug/IMG_6131a-copy.jpg)"></a>
+  </figure>
+
+  <section class="author">
+    <h4>Stephan Behnke</h4>
+    <p>
+      Software developer by trade. Most of the time on the ever lasting quest for simplicity, elegance and beauty in code.
+      Or just getting stuff done in-between.
+    </p>
+  </section>
+
+</footer>
+
+<div class="separator"></div>
+
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "stephanos" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	</div>
+
+	<div class="pagination">
+		<a href="/how-i-learned-to-stop-worrying-and-love-the-job-hunt-in-toronto/" class="left arrow">&#8592;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2020-11-01 17:28:41.414616 -0800 PST m=&#43;0.221874924">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

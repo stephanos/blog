@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Rewire: A new Approach to Dependency Injection in Elixir</title>
+      <link>https://blog.stephanbehnke.com/rewire-new-approach-to-dependency-injection-in-elixir/</link>
+      <pubDate>Fri, 30 Oct 2020 00:38:50 +0000</pubDate>
+      
+      <guid>https://blog.stephanbehnke.com/rewire-new-approach-to-dependency-injection-in-elixir/</guid>
+      <description>I&amp;rsquo;ve been working with Elixir for 3 years full-time now and while I think it&amp;rsquo;s an exceptional language and development environment, the testing story always felt incomplete to me. Something was missing. In this post, I&amp;rsquo;ll explain what that is and how I attempted to fix it.
+Injecting Mocks While I strive to minimize the use of mocks, I find they are still quite useful in certain situations.
+Before Elixir, I&amp;rsquo;ve mainly worked with Java.</description>
+    </item>
+    
+    <item>
       <title>How I Learned to Stop Worrying and Love the Job Hunt</title>
       <link>https://blog.stephanbehnke.com/how-i-learned-to-stop-worrying-and-love-the-job-hunt-in-toronto/</link>
       <pubDate>Sat, 11 Nov 2017 17:54:31 +0000</pubDate>
