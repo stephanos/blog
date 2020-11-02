@@ -170,7 +170,7 @@
 <p>You might wonder how it generates a new module from the original one. The library finds the module&rsquo;s source file path by calling <code>module_info</code>, parses the code into an AST with <code>Code.string_to_quoted</code>, traverses the AST to replace any rewired dependencies using <code>Macro.traverse</code> and evaluates the result with <code>Code.eval_quoted</code>. Check out the <a href="https://github.com/stephanos/rewire/blob/master/lib/rewire">source code</a> for details.</p>
 <h2 id="limitation">Limitation</h2>
 <p>As far as I know, the only situation where you cannot use <code>rewire</code> to inject your dependencies is when you are dealing with a process that has been started <em>before</em> your test.</p>
-<p>Take for example a <a href="https://www.phoenixframework.org/">Phoenix</a> controller test. Since you&rsquo;ll be writing tests against the server (using <code>ConnCase</code>), any dependency in the controller cannot be rewired after the fact.</p>
+<p>Take for example a <a href="https://www.phoenixframework.org/">Phoenix</a> controller test. Since you&rsquo;ll be writing tests against the server (using <code>ConnCase</code>), a dependency in the controller cannot be rewired after the fact.</p>
 <h2 id="la-fin">La Fin</h2>
 <p>I hope you enjoyed this blog post. If you have any questions or feedback, please leave a comment. And if you&rsquo;re curious, try out <a href="https://hex.pm/packages/rewire">rewire</a> yourself.</p>
 
@@ -284,7 +284,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2020-11-01 17:28:41.414616 -0800 PST m=&#43;0.221874924">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2020-11-01 17:35:10.16703 -0800 PST m=&#43;0.096863608">2020</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
